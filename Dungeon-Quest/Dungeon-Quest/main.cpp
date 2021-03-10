@@ -1,3 +1,22 @@
+
+#include "src/Game.h"
+
+int main(const int argc, const char** argv)
+{
+    Game().Run();
+    return 0;
+}
+
+
+
+
+
+
+
+
+/*
+
+
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
@@ -6,75 +25,76 @@
 
 #include "src/Hero.h"
 #include "src/Defines.h"
-
+#include <vector>
+#include "src/Collision.hpp"
 
 struct Window
 {
     static inline float width, height;
 };
 
-struct MainMenuScreen
-{
-    sf::Texture titleTexture;
-    sf::Sprite  titleSprite;
-    sf::Texture backgroundTexture;
-    sf::Sprite  backgroundSprite;
+#include "src/Camera.h"
 
-    MainMenuScreen()
-    {
-        ASSERT(titleTexture.loadFromFile("assets/title.png"), "Failed to load texture: assets/title.png");
-        titleTexture.setSmooth(true);
-        titleSprite.setTexture(titleTexture);
-        titleSprite.setPosition({ Window::width / 2 - titleTexture.getSize().x / 2, Window::height / 2 - titleTexture.getSize().y / 2 });
-        ASSERT(backgroundTexture.loadFromFile("assets/back.png"), "Failed to load texture: assets/back.png");
-        backgroundTexture.setRepeated(true);
-        backgroundSprite.setTexture(backgroundTexture);
-        backgroundSprite.scale({ 5, 5 });
-    }
-};
-
+#define TILE_SIZE 16
+#define VIEWPORT_WIDTH  247 * 1.1
+#define VIEWPORT_HEIGHT 135 * 1.1
 
 int main(const int argc, const char** argv)
 {
-    sf::VideoMode desktop = sf::VideoMode().getFullscreenModes()[0];
-    Window::width  = (float) desktop.width;
-    Window::height = (float) desktop.height;
-    sf::RenderWindow window(desktop, "Dungeon Quest!", sf::Style::None);
+    sf::VideoMode vm = sf::VideoMode().getDesktopMode();
+    Window::width  = (float)vm.width;
+    Window::height = (float)vm.height;
+    sf::RenderWindow window(vm, "Dungeon Quest!", sf::Style::None);
+    window.setMouseCursorVisible(false);
+    window.setVerticalSyncEnabled(true);
 
     HeroAssets::LoadHeroAssets();
+    PTR<Hero> hero = HeroFactory::CreateHero(Hero::Type::KNIGHT, VIEWPORT_WIDTH / 2, VIEWPORT_HEIGHT / 2);
+    hero->SetState(Hero::State::RUN);
 
-    MainMenuScreen screen;
-    PTR<Hero> a = HeroFactory::CreateHero(Hero::Type::KNIGHT, Window::width / 2 - 200, Window::height / 2 - 100);
+    sf::Texture curTex;
+    curTex.loadFromFile("assets/frames/weapon_regular_sword.png");
+    curTex.setRepeated(true);
+    sf::Sprite cur;
+    cur.setTexture(curTex);
+    
+    std::vector<CollisionBox> walls;
+   // walls.push_back()
+    walls.push_back(CollisionBox(TILE_SIZE *3, TILE_SIZE *2, TILE_SIZE *10, TILE_SIZE));
+
+
+    sf::Texture backgroundTexture;
+    backgroundTexture.loadFromFile("assets/level1.png");
+    backgroundTexture.setRepeated(true);
+    sf::Sprite background;
+    background.setTexture(backgroundTexture);
+
     sf::Clock clock;
-    sf::View view1(sf::FloatRect(0, 0, Window::width, Window::height));
+
+    sf::CircleShape shape(16);
+
+    shape.setOutlineThickness(0.5f);
+    shape.setFillColor(sf::Color::Transparent);
+    shape.setOutlineColor(sf::Color(0, 255, 0));
+
+    Camera camera(0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+    float time = 0;
+    int FPS = 0;
+
     while (window.isOpen())
     {
+        FPS++;
+        if (time >= 1)
+        {
+            std::cout << FPS << std::endl;
+            time = 0;
+            FPS = 0;
+        }
         float delta = clock.restart().asSeconds();
-     
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-        {
-          //  a->setScale(sf::Vector2f(-10, 10));
-            
-            a->move({ -1, 0 });
-            view1.move({ -1, 0 });
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-        {
-         //   a->setScale(sf::Vector2f(10, 10));
-            a->move({ 1, 0 });
-            view1.move({ 1, 0 });
-        } 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-        {
-            a->move({ 0, -1 });
-            view1.move({ 0, -1 });
-        } 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-        {
-            a->move({ 0, 1 });
-            view1.move({ 0, 1 });
-        }
-       // a->Update(delta);
+        time += delta;
+        camera.ProcessInput(delta, hero->speed);
+        hero->Update(delta);
+        shape.setPosition({ hero->getPosition().x - 8, hero->getPosition().y });
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -82,15 +102,17 @@ int main(const int argc, const char** argv)
                 window.close();
         }
 
+
         window.clear(sf::Color::Black);
-        //window.setView(view1);
-      //  window.draw(screen.backgroundSprite);
-        window.draw(*a);
+        window.setView(camera);
+        window.draw(background);
+        window.draw(*hero);
+        cur.setPosition({ camera.GetCursorPos().x , camera.GetCursorPos().y });
+        window.draw(cur);
+        window.draw(walls[0].shape);
       //  window.setView(window.getDefaultView());
-      //  window.draw(screen.titleSprite);
-        
         window.display();
     }
 
     return 0;
-}
+}*/
