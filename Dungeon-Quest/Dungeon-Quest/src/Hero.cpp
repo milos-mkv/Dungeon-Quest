@@ -1,74 +1,60 @@
-#include "Hero.h"
-/*
-void HeroAssets::LoadHeroAssets()
+#include <Hero.h>
+#include <Defines.h>
+#include <iostream>
+#include <Assets.h>
+#include <Character.h>
+
+Hero::Hero(HeroType type, float x, float y) : type(type)
 {
-    for (int i = 0; i < HERO_TYPE_COUNT; i++)
+    state = Character::State::IDLE;
+    setPosition({ x, y });
+    setTexture(Assets::HeroTextures[type][state][0]);
+    collider.setPosition(x, y + HERO_COLLIDER_HEIGHT_OFFSET);
+    collider.setSize({ HERO_WIDTH, HERO_HEIGHT - HERO_COLLIDER_HEIGHT_OFFSET });
+}
+
+void Hero::ProcessInput(float delta)
+{
+    speed = { 0, 0 };
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     {
-        LoadTexturesForHero(HEROES[i], (Hero::Type)i);
+        speed.x = -HERO_SPEED * delta;
+        setTextureRect(sf::IntRect(HERO_WIDTH, 0, -HERO_WIDTH, HERO_HEIGHT));
     }
-}
-
-void HeroAssets::LoadTexturesForHero(const std::string& name, Hero::Type type)
-{
-    for (int i = 0; i < SPRITE_ANIM_NUM; i++)
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
     {
-        ASSERT(textures[type][Hero::State::IDLE][i].loadFromFile("assets/frames/" + name + "_idle_anim_f" + std::to_string(i) + ".png"), "Failed to load texture!");
-        ASSERT(textures[type][Hero::State::RUN] [i].loadFromFile("assets/frames/" + name + "_run_anim_f" + std::to_string(i) + ".png"), "Failed to load texture!");
-        ASSERT(textures[type][Hero::State::HIT] [i].loadFromFile("assets/frames/" + name + "_hit_anim_f0.png"), "Failed to load texture!");
+        speed.x = HERO_SPEED * delta;
+        setTextureRect(sf::IntRect(0, 0, HERO_WIDTH, HERO_HEIGHT));
     }
-}
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+    {
+        speed.y = -HERO_SPEED * delta;
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+    {
+        speed.y = HERO_SPEED * delta;
+    }
 
-PTR<Hero> HeroFactory::CreateHero(Hero::Type type, float x, float y)
-{
-    PTR<Hero> hero = CreatePTR<Hero>(type);
-    hero->setPosition({ x - 8, y - 14 });
-    hero->setTexture(HeroAssets::textures[type][Hero::State::IDLE][0]);
-    return hero;
-}
+    state = (speed.x || speed.y) ? Character::State::RUN : Character::State::IDLE;
 
-void Hero::SetState(State state)
-{
-    this->state = state;
-    setTexture(HeroAssets::textures[type][state][0]);
+    UpdateAnimation(delta);
 }
 
 void Hero::Update(float delta)
 {
-    state = Hero::State::IDLE;
+    move(speed);
+    collider.setPosition(getPosition().x, getPosition().y + HERO_COLLIDER_HEIGHT_OFFSET);
+}
 
-    KeyboardInput(delta);
-
+void Hero::UpdateAnimation(float delta)
+{
     timer += delta;
     if (timer >= 0.12f)
     {
-        setTexture(HeroAssets::textures[type][state][index]);
-        if (++index == SPRITE_ANIM_NUM)
+        setTexture(Assets::HeroTextures[type][state][index]);
+        if (++index == 4)
             index = 0;
         timer = 0;
     }
 }
-
-void Hero::KeyboardInput(float delta)
-{
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-    {
-        move({ -speed * delta, 0 });
-        state = Hero::State::RUN;
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-    {
-        move({ speed * delta, 0 });
-        state = Hero::State::RUN;
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-    {
-        move({ 0, -speed * delta });
-        state = Hero::State::RUN;
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-    {
-        move({ 0, speed * delta });
-        state = Hero::State::RUN;
-    }
-}
-*/

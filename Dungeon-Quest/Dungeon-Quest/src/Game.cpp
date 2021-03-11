@@ -1,7 +1,8 @@
-#include "Game.h"
+#include <Game.h>
 
-#include "LoadingScreen.h"
-#include "GameplayScreen.h"
+#include <LoadingScreen.h>
+#include <GameplayScreen.h>
+#include <string>
 
 Game::Game()
 {
@@ -13,7 +14,6 @@ Game::Game()
 
     screen = CreatePTR<LoadingScreen>();
     screen = CreatePTR<GameplayScreen>();
-
 }
 
 void Game::Run()
@@ -40,4 +40,3 @@ void Game::PollEvents()
             window->close();
     }
 }
-

@@ -18,19 +18,10 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Hero.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Screen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\GameplayScreen.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Assets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\LoadingScreen.cpp">
@@ -39,7 +30,25 @@
     <ClCompile Include="src\Level.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Assets.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Collision.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Enemy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Hero.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Animation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,37 +56,46 @@
     <ClInclude Include="Enemies.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Hero.h">
+    <ClInclude Include="include\Hero.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Defines.h">
+    <ClInclude Include="include\Defines.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Camera.h">
+    <ClInclude Include="include\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Collision.hpp">
+    <ClInclude Include="include\Collision.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Game.h">
+    <ClInclude Include="include\Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Screen.h">
+    <ClInclude Include="include\Screen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameplayScreen.h">
+    <ClInclude Include="include\GameplayScreen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Assets.h">
+    <ClInclude Include="include\Assets.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\LoadingScreen.h">
+    <ClInclude Include="include\LoadingScreen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Types.h">
+    <ClInclude Include="include\Types.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Level.h">
+    <ClInclude Include="include\Level.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Enemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Animation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Character.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
