@@ -5,6 +5,7 @@
 #include "Defines.h"
 #include "components/ColliderComponent.hpp"
 #include <vector>
+#include <components/EnemyComponent.hpp>
 
 static const int LEVELS_COUNT = 1;
 
@@ -28,6 +29,7 @@ struct Level
     sf::Sprite  mapSprite;
 
     std::vector<ColliderComponent> walls;
+    std::vector<EnemyComponent*> enemies;
 
     Level(int level);
 };

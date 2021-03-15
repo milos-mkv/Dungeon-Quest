@@ -7,6 +7,7 @@
 HeroComponent::HeroComponent(CharacterType type, float x, float y)
     : CharacterComponent(type, x, y)
 {
+    life = 3;
 }
 
 void HeroComponent::ProcessInput(float delta)

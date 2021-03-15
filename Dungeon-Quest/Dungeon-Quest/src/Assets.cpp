@@ -7,7 +7,7 @@ void Assets::LoadAssets()
     {
         LoadCharacterTextures((CharacterType)i);
     }
-
+    LoadItemTextures();
 }
 
 void Assets::LoadCharacterTextures(CharacterType type)
@@ -17,5 +17,12 @@ void Assets::LoadCharacterTextures(CharacterType type)
         ASSERT(CharacterTextures[type][CharacterState::IDLE][i].loadFromFile("assets/frames/" + CHARACTER_NAMES[type] + "_idle_anim_f" + std::to_string(i) + ".png"), "Failed to load texture!");
         ASSERT(CharacterTextures[type][CharacterState::RUN] [i].loadFromFile("assets/frames/" + CHARACTER_NAMES[type] + "_run_anim_f"  + std::to_string(i) + ".png"), "Failed to load texture!");
     }
+}
+
+void Assets::LoadItemTextures()
+{
+    ASSERT(HeartTexture[0].loadFromFile("assets/frames/ui_heart_full.png"),  "Failed to load texture!");
+    ASSERT(HeartTexture[1].loadFromFile("assets/frames/ui_heart_half.png"),  "Failed to load texture!");
+    ASSERT(HeartTexture[2].loadFromFile("assets/frames/ui_heart_empty.png"), "Failed to load texture!");
 }
 

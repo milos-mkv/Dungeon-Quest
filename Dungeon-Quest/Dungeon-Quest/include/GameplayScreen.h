@@ -12,7 +12,6 @@ struct GameplayScreen : public Screen
     Level* level;
     sf::View* camera;
     HeroComponent* hero;
-    EnemyComponent* enemy;
 
     GameplayScreen();
 
