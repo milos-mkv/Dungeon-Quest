@@ -1,31 +1,27 @@
-#include <Hero.h>
+#include <components/HeroComponent.hpp>
+
 #include <Defines.h>
 #include <iostream>
 #include <Assets.h>
-#include <Character.h>
 
-Hero::Hero(HeroType type, float x, float y) : type(type)
+HeroComponent::HeroComponent(CharacterType type, float x, float y)
+    : CharacterComponent(type, x, y)
 {
-    state = Character::State::IDLE;
-    setPosition({ x, y });
-    setTexture(Assets::HeroTextures[type][state][0]);
-    collider.setPosition(x, y + HERO_COLLIDER_HEIGHT_OFFSET);
-    collider.setSize({ HERO_WIDTH, HERO_HEIGHT - HERO_COLLIDER_HEIGHT_OFFSET });
 }
 
-void Hero::ProcessInput(float delta)
+void HeroComponent::ProcessInput(float delta)
 {
     speed = { 0, 0 };
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     {
         speed.x = -HERO_SPEED * delta;
-        setTextureRect(sf::IntRect(HERO_WIDTH, 0, -HERO_WIDTH, HERO_HEIGHT));
+        sprite.setTextureRect(sf::IntRect(CharacterSpriteSizes[type].x, 0, -CharacterSpriteSizes[type].x, CharacterSpriteSizes[type].y));
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
     {
         speed.x = HERO_SPEED * delta;
-        setTextureRect(sf::IntRect(0, 0, HERO_WIDTH, HERO_HEIGHT));
+        sprite.setTextureRect(sf::IntRect(0, 0, CharacterSpriteSizes[type].x, CharacterSpriteSizes[type].y));
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
     {
@@ -36,25 +32,12 @@ void Hero::ProcessInput(float delta)
         speed.y = HERO_SPEED * delta;
     }
 
-    state = (speed.x || speed.y) ? Character::State::RUN : Character::State::IDLE;
-
+    state = (speed.x || speed.y) ? CharacterState::RUN : CharacterState::IDLE;
     UpdateAnimation(delta);
 }
 
-void Hero::Update(float delta)
+void HeroComponent::Update(float delta)
 {
     move(speed);
-    collider.setPosition(getPosition().x, getPosition().y + HERO_COLLIDER_HEIGHT_OFFSET);
-}
-
-void Hero::UpdateAnimation(float delta)
-{
-    timer += delta;
-    if (timer >= 0.12f)
-    {
-        setTexture(Assets::HeroTextures[type][state][index]);
-        if (++index == 4)
-            index = 0;
-        timer = 0;
-    }
+    sprite.move(speed);
 }

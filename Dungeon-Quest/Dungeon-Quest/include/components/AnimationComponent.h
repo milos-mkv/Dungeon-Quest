@@ -1,10 +1,11 @@
 #pragma once
 
-struct Animation
+struct AnimationComponent
 {
     float timer;
     int   index;
 
-    Animation();
+    AnimationComponent() 
+        : timer(0), index(0) { }
     virtual void UpdateAnimation(float delta) = 0;
 };

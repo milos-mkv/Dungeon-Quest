@@ -4,19 +4,14 @@
 #include <SFML/System.hpp>
 
 #include <map>
-#include <string>
-
-#include "Types.h"
+#include <components/CharacterComponent.h>
 
 struct Assets
 {
-    static inline std::map<HeroType,  sf::Texture[3][4]> HeroTextures;
-    static inline std::map<EnemyType, sf::Texture[2][4]> EnemyTextures;
-
+    static inline std::map<CharacterType, sf::Texture[2][4]> CharacterTextures;
     static void LoadAssets();
 
 private:
-    static void LoadHeroTextures(HeroType type);
-    static void LoadEnemyTextures(EnemyType type);
+    static void LoadCharacterTextures(CharacterType type);
 };
 

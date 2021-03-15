@@ -1,26 +1,36 @@
-#include <Enemy.h>
+#include <components/EnemyComponent.hpp>
+
 #include <Assets.h>
 #include <Defines.h>
-#include <Types.h>
+#include <SFML/Graphics.hpp>
 
-Enemy::Enemy(EnemyType type, float x, float y) : type(type)
+#define ENEMY_SPEED 50
+
+static sf::Vector2f normalize(const sf::Vector2f& source)
 {
-    state = Character::State::IDLE;
-    setPosition({ x, y });
-
-    setTexture(Assets::EnemyTextures[type][state][0]);
-    collider.setPosition(x, y + ENEMY_COLLIDER_HEIGHT_OFFSET);
-    collider.setSize({ (float) ENEMY_SIZES[type].x, (float)ENEMY_SIZES[type].y - ENEMY_COLLIDER_HEIGHT_OFFSET });
+    float length = sqrt((source.x * source.x) + (source.y * source.y));
+    return (length != 0) ? sf::Vector2f(source.x / length, source.y / length) : source;
 }
 
-void Enemy::UpdateAnimation(float delta)
+EnemyComponent::EnemyComponent(CharacterType type, float x, float y) 
+    : CharacterComponent(type, x, y)
 {
-    timer += delta;
-    if (timer >= 0.12f)
+    sprite.setTextureRect(sf::IntRect(CharacterSpriteSizes[type].x, 0, -CharacterSpriteSizes[type].x, CharacterSpriteSizes[type].y));
+
+}
+
+void EnemyComponent::Update(float delta, HeroComponent* hero)
+{
+    sf::Vector2f diff = getPosition() - hero->getPosition();
+    sf::Vector2f dir  = normalize(diff);
+
+    if (sqrt(diff.x * diff.x + diff.y * diff.y) > 1)
     {
-        setTexture(Assets::EnemyTextures[type][state][index]);
-        if (++index == 4)
-            index = 0;
-        timer = 0;
+        if(diff.x > 0)
+            sprite.setTextureRect(sf::IntRect(CharacterSpriteSizes[type].x, 0, -CharacterSpriteSizes[type].x, CharacterSpriteSizes[type].y));
+        else
+            sprite.setTextureRect(sf::IntRect(0, 0, CharacterSpriteSizes[type].x, CharacterSpriteSizes[type].y));
+
+        speed = { -dir.x * ENEMY_SPEED * delta , -dir.y * ENEMY_SPEED * delta };
     }
 }

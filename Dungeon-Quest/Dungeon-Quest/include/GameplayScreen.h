@@ -2,16 +2,17 @@
 #include "Defines.h"
 #include "Screen.h"
 #include "Level.h"
-#include "Camera.h"
-#include "Hero.h"
-#include "Enemy.h"
+
+#include <components/HeroComponent.hpp>
+#include <components/EnemyComponent.hpp>
+
 
 struct GameplayScreen : public Screen
 {
-    PTR<Level> level;
-    PTR<Camera> camera;
-    PTR<Hero> hero;
-    PTR<Enemy> enemy;
+    Level* level;
+    sf::View* camera;
+    HeroComponent* hero;
+    EnemyComponent* enemy;
 
     GameplayScreen();
 

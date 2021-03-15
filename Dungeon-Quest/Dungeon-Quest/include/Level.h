@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "Defines.h"
-#include "Collision.hpp"
+#include "components/ColliderComponent.hpp"
 #include <vector>
 
 static const int LEVELS_COUNT = 1;
@@ -27,7 +27,7 @@ struct Level
     sf::Texture mapTexture;
     sf::Sprite  mapSprite;
 
-    std::vector<CollisionBox> walls;
+    std::vector<ColliderComponent> walls;
 
     Level(int level);
 };
