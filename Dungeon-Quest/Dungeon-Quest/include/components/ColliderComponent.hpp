@@ -14,7 +14,7 @@ struct ColliderComponent : public sf::RectangleShape
 
     ColliderComponent(float x, float y, float width, float height)
     {
-        setPosition({ x, y });
+        setPosition({ x, y - 2});
         setSize({ abs(width - x) + TILE_SIZE, abs(height - y) + TILE_SIZE });
         Setup();
     }

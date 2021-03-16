@@ -5,7 +5,10 @@
 #include <SFML/Graphics.hpp>
 #include <Game.h>
 
-#define ENEMY_SPEED 50
+#define ENEMY_SPEED          50
+#define ENEMY_DETECTION_SIZE 70
+
+static const int EnemyRanges[2] = { 1, 50 };
 
 static sf::Vector2f normalize(const sf::Vector2f& source)
 {
@@ -16,8 +19,11 @@ static sf::Vector2f normalize(const sf::Vector2f& source)
 EnemyComponent::EnemyComponent(CharacterType type, float x, float y)
     : CharacterComponent(type, x, y)
 {
-    detection = DetectionComponent(x - CharacterColliderSizes[type].x * 3, y - CharacterColliderSizes[type].y * 2, 
-        CharacterColliderSizes[type].x * 7, CharacterColliderSizes[type].y * 5);
+    detection = DetectionComponent(x - ENEMY_DETECTION_SIZE, y - ENEMY_DETECTION_SIZE, 
+        CharacterColliderSizes[type].x + ENEMY_DETECTION_SIZE * 2, CharacterColliderSizes[type].y + ENEMY_DETECTION_SIZE * 2);
+
+    range = RangeComponent(x - EnemyRanges[CharacterAttackTypes[type]], y - EnemyRanges[CharacterAttackTypes[type]], 
+        CharacterColliderSizes[type].x + EnemyRanges[CharacterAttackTypes[type]] * 2, CharacterColliderSizes[type].y + EnemyRanges[CharacterAttackTypes[type]] * 2);
 }
 
 void EnemyComponent::Update(float delta, HeroComponent* hero)
@@ -37,4 +43,5 @@ void EnemyComponent::Draw()
     Game::window->draw(sprite);     // Draw character sprite.
     Game::window->draw(*this);      // Draw character collider box.
     Game::window->draw(detection);  // Draw detection box.
+    Game::window->draw(range);  // Draw detection box.
 }

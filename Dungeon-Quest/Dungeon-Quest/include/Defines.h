@@ -12,7 +12,7 @@
 
 // Hero
 
-#define HERO_SPEED                  100
+#define HERO_SPEED       100
 
 struct Exception : public std::exception
 {

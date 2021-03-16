@@ -175,6 +175,7 @@
     <ClInclude Include="include\components\CharacterComponent.h" />
     <ClInclude Include="include\components\DetectionComponent.hpp" />
     <ClInclude Include="include\components\EnemyComponent.hpp" />
+    <ClInclude Include="include\components\RangeComponent.hpp" />
     <ClInclude Include="include\Level.h" />
     <ClInclude Include="include\LoadingScreen.h" />
     <ClInclude Include="include\Assets.h" />

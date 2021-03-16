@@ -17,6 +17,8 @@ GameplayScreen::GameplayScreen()
     uiview = new sf::View(sf::FloatRect(0, 32, VIEWPORT_WIDTH, VIEWPORT_HEIGHT));
     level->enemies.push_back(new EnemyComponent(CharacterType::BIG_DEMON, 350, 100));
     level->enemies.push_back(new EnemyComponent(CharacterType::ORC_SHAMAN, 350, 350));
+
+
 }
 
 void GameplayScreen::Render(float delta)
@@ -39,6 +41,7 @@ void GameplayScreen::Render(float delta)
         enemy->move(enemy->speed);
         enemy->sprite.move(enemy->speed);
         enemy->detection.move(enemy->speed);
+        enemy->range.move(enemy->speed);
     }
 
     Game::window->setView(*camera);
@@ -104,8 +107,8 @@ void GameplayScreen::CheckHeroCollision()
 
     for (EnemyComponent* enemy : level->enemies)
     {
-        if (CheckCollisionX(hero, enemy)) hero->speed.x = 0;
-        if (CheckCollisionY(hero, enemy)) hero->speed.y = 0;
+        //if (CheckCollisionX(hero, enemy)) hero->speed.x = 0;
+      //  if (CheckCollisionY(hero, enemy)) hero->speed.y = 0;
 
 
         bool chasing = false;
@@ -120,8 +123,18 @@ void GameplayScreen::CheckHeroCollision()
             enemy->state = CharacterState::IDLE;
         }
 
-        if (CheckCollisionX(enemy, hero)) enemy->speed.x = 0;
-        if (CheckCollisionY(enemy, hero)) enemy->speed.y = 0;
+        if (CheckCollisionX(hero, &(enemy->range)) || CheckCollisionY(hero, &(enemy->range)))
+        {
+            enemy->speed = { 0, 0 };
+            enemy->state = CharacterState::IDLE;
+        }
+
+
+    //    if (CheckCollisionX(enemy, hero)) enemy->speed.x = 0;
+  //      if (CheckCollisionY(enemy, hero)) enemy->speed.y = 0;
     }
-    
+    if (hero->speed.x && hero->speed.y)
+    {
+        hero->speed = { hero->speed.x / 1.2f, hero->speed.y / 1.2f };
+    }
 }

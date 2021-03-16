@@ -45,7 +45,7 @@ static std::map<CharacterType, sf::Vector2f> CharacterSpriteSizes =
 static std::map<CharacterType, sf::Vector2f> CharacterColliderSizes =
 {
     { CharacterType::ELF,         { 16, 16 } },
-    { CharacterType::KNIGHT,      { 16, 16 } },
+    { CharacterType::KNIGHT,      { 14, 18 } },
     { CharacterType::WIZZARD,     { 16, 16 } },
     { CharacterType::OGRE,        { 20, 25 } },
     { CharacterType::ORC_SHAMAN,  { 12, 16 } },
