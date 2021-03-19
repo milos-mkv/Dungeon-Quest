@@ -19,6 +19,6 @@ struct GameplayScreen : public Screen
 
     ~GameplayScreen();
 private:
-    void CheckHeroCollision();
+    void CheckHeroCollision(float delta);
 };
 

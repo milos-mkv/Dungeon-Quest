@@ -9,25 +9,27 @@
 
 static sf::View* uiview;
 
+#include <components/ProjectileComponent.hpp>
+
+
 GameplayScreen::GameplayScreen()
 {
     level  = new Level(1);
     camera = new sf::View(sf::FloatRect(0, 32, VIEWPORT_WIDTH, VIEWPORT_HEIGHT));
     hero   = new HeroComponent(CharacterType::KNIGHT, 100, 100);
     uiview = new sf::View(sf::FloatRect(0, 32, VIEWPORT_WIDTH, VIEWPORT_HEIGHT));
-    level->enemies.push_back(new EnemyComponent(CharacterType::BIG_DEMON, 350, 100));
+    level->enemies.push_back(new EnemyComponent(CharacterType::BIG_DEMON,  350, 100));
     level->enemies.push_back(new EnemyComponent(CharacterType::ORC_SHAMAN, 350, 350));
-
-
 }
-
+float TIME = 0;
 void GameplayScreen::Render(float delta)
 {
+    TIME += delta;
     hero->ProcessInput(delta);
 
     for(EnemyComponent* enemy : level->enemies)
         enemy->Update(delta, hero);
-    CheckHeroCollision();
+    CheckHeroCollision(delta);
 
     hero->Update(delta);
 
@@ -50,7 +52,16 @@ void GameplayScreen::Render(float delta)
         enemy->Draw();
     hero->Draw();
 
-
+    for(std::vector<PTR<ProjectileComponent>>::iterator iter = level->projectiles.begin(); iter < level->projectiles.end(); iter++)
+    {
+        if ((*iter)->done)
+        {
+            level->projectiles.erase(iter);       
+            continue;
+        }
+        (*iter)->Update(delta);
+        Game::window->draw(**iter);
+    }
     for (auto& wall : level->walls)
     {
         Game::window->draw(wall);
@@ -74,7 +85,10 @@ GameplayScreen::~GameplayScreen()
 {
     delete level;
     delete hero;
+    delete uiview;
     delete camera;
+    for (EnemyComponent* enemy : level->enemies)
+        delete enemy;
 }
 
 static bool CheckCollisionX(CharacterComponent* c1, sf::RectangleShape *c2)
@@ -89,7 +103,14 @@ static bool CheckCollisionY(CharacterComponent* c1, sf::RectangleShape* c2)
         && (c1->getPosition().y + c1->speed.y + c1->getSize().y >= c2->getPosition().y && c2->getPosition().y + c2->getSize().y >= c1->getPosition().y + c1->speed.y);
 }
 
-void GameplayScreen::CheckHeroCollision()
+static bool CheckCollision(sf::RectangleShape* c1, sf::RectangleShape* c2)
+{
+    return (c1->getPosition().x + c1->getSize().x >= c2->getPosition().x && c2->getPosition().x + c2->getSize().x >= c1->getPosition().x)
+        && (c1->getPosition().y + c1->getSize().y >= c2->getPosition().y && c2->getPosition().y + c2->getSize().y >= c1->getPosition().y);
+
+}
+
+void GameplayScreen::CheckHeroCollision(float delta)
 {
 
     for (auto& wall : level->walls)
@@ -107,32 +128,34 @@ void GameplayScreen::CheckHeroCollision()
 
     for (EnemyComponent* enemy : level->enemies)
     {
-        //if (CheckCollisionX(hero, enemy)) hero->speed.x = 0;
-      //  if (CheckCollisionY(hero, enemy)) hero->speed.y = 0;
-
-
-        bool chasing = false;
-        if (CheckCollisionX(hero, &(enemy->detection)) || CheckCollisionY(hero, &(enemy->detection)))
+        if (!enemy->chasing && (CheckCollisionX(hero, &(enemy->detection)) || CheckCollisionY(hero, &(enemy->detection))))
         {
             enemy->chasing = true;
-            enemy->state = CharacterState::RUN;
-        }
-        else
-        {
-            enemy->speed = { 0, 0 };
-            enemy->state = CharacterState::IDLE;
+            enemy->state   = CharacterState::RUN;
         }
 
         if (CheckCollisionX(hero, &(enemy->range)) || CheckCollisionY(hero, &(enemy->range)))
         {
             enemy->speed = { 0, 0 };
             enemy->state = CharacterState::IDLE;
+            if (enemy->attackSpeedTimer == 0.f && enemy->attackType == CharacterAttackType::RANGED)
+            {
+                enemy->attackSpeedTimer += delta;
+                level->projectiles.push_back(CreatePTR<ProjectileComponent>(enemy->getPosition(), hero->getPosition()));
+            }
         }
-
-
-    //    if (CheckCollisionX(enemy, hero)) enemy->speed.x = 0;
-  //      if (CheckCollisionY(enemy, hero)) enemy->speed.y = 0;
     }
+
+    for (std::vector<PTR<ProjectileComponent>>::iterator iter = level->projectiles.begin(); iter < level->projectiles.end(); iter++)
+    {
+        if (CheckCollision(hero, (*iter).get()))
+        {
+            level->projectiles.erase(iter);
+            continue;
+        }
+    }
+
+
     if (hero->speed.x && hero->speed.y)
     {
         hero->speed = { hero->speed.x / 1.2f, hero->speed.y / 1.2f };

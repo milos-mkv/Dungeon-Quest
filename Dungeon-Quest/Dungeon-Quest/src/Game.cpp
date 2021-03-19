@@ -10,7 +10,7 @@ Game::Game()
         return;
     window = CreatePTR<sf::RenderWindow>(sf::VideoMode().getDesktopMode(), "Dungeon Quest!", sf::Style::None);
     window->setMouseCursorVisible(false);
-   // window->setVerticalSyncEnabled(true);
+    window->setVerticalSyncEnabled(true);
 
     screen = CreatePTR<LoadingScreen>();
     screen = CreatePTR<GameplayScreen>();

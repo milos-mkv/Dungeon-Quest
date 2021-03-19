@@ -4,6 +4,8 @@
 #include <iostream>
 #include <Assets.h>
 
+static const float MaxHurtTime = 1.0f;
+
 HeroComponent::HeroComponent(CharacterType type, float x, float y)
     : CharacterComponent(type, x, y)
 {
@@ -17,12 +19,12 @@ void HeroComponent::ProcessInput(float delta)
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     {
         speed.x = -HERO_SPEED * delta;
-        sprite.setTextureRect(sf::IntRect(CharacterSpriteSizes[type].x, 0, -CharacterSpriteSizes[type].x, CharacterSpriteSizes[type].y));
+        FlipTexture(true);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
     {
         speed.x = HERO_SPEED * delta;
-        sprite.setTextureRect(sf::IntRect(0, 0, CharacterSpriteSizes[type].x, CharacterSpriteSizes[type].y));
+        FlipTexture(false);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
     {
@@ -34,6 +36,7 @@ void HeroComponent::ProcessInput(float delta)
     }
 
     state = (speed.x || speed.y) ? CharacterState::RUN : CharacterState::IDLE;
+
     UpdateAnimation(delta);
 }
 

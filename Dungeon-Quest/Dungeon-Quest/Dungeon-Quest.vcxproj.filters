@@ -89,5 +89,8 @@
     <ClInclude Include="include\components\RangeComponent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\components\ProjectileComponent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

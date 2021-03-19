@@ -23,6 +23,8 @@ struct CharacterComponent : public AnimationComponent, public ColliderComponent
     CharacterState      state;
     sf::Sprite          sprite;
     sf::Vector2f        speed;
+    float               attackSpeed;
+    float               attackSpeedTimer;
     
     CharacterComponent(CharacterType type, float x, float y);
     void UpdateAnimation(float delta);

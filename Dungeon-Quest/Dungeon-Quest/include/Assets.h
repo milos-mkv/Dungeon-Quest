@@ -8,8 +8,9 @@
 
 struct Assets
 {
-    static inline std::map<CharacterType, sf::Texture[2][4]> CharacterTextures;
+    static inline std::map<CharacterType, sf::Texture[3][4]> CharacterTextures;
     static inline sf::Texture HeartTexture[3];
+    static inline sf::Texture FireTextures[4];
     static void LoadAssets();
 
 private:

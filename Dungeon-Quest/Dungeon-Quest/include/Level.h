@@ -6,6 +6,7 @@
 #include "components/ColliderComponent.hpp"
 #include <vector>
 #include <components/EnemyComponent.hpp>
+#include <components/ProjectileComponent.hpp>
 
 static const int LEVELS_COUNT = 1;
 
@@ -30,6 +31,7 @@ struct Level
 
     std::vector<ColliderComponent> walls;
     std::vector<EnemyComponent*> enemies;
+    std::vector<PTR<ProjectileComponent>> projectiles;
 
     Level(int level);
 };

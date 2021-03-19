@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <string>
+#include <SFML/System/Vector2.hpp>
 
 #define PTR std::shared_ptr
 #define CreatePTR std::make_shared
@@ -13,6 +14,12 @@
 // Hero
 
 #define HERO_SPEED       100
+
+static sf::Vector2f normalize(const sf::Vector2f& source)
+{
+    float length = sqrt((source.x * source.x) + (source.y * source.y));
+    return (length != 0) ? sf::Vector2f(source.x / length, source.y / length) : source;
+}
 
 struct Exception : public std::exception
 {
