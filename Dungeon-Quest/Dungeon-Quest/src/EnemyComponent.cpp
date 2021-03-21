@@ -2,21 +2,20 @@
 
 #include <Assets.h>
 #include <Defines.h>
-#include <SFML/Graphics.hpp>
 #include <Game.h>
 
-constexpr int ENEMY_DETECTION_SIZE = 70;           // Enemy detection box size;
+constexpr int ENEMY_DETECTION_SIZE = 70;
 
 EnemyComponent::EnemyComponent(CharacterType type, float x, float y)
-    : CharacterComponent(type, x, y)
+    : CharacterComponent(type, x, y), chasing(false)
 {
     detection = DetectionComponent(x - ENEMY_DETECTION_SIZE, y - ENEMY_DETECTION_SIZE, getSize().x + ENEMY_DETECTION_SIZE * 2, 
         getSize().y + ENEMY_DETECTION_SIZE * 2);
 
-    range = RangeComponent(x - CharacterProps[type].range, y - CharacterProps[type].range, getSize().x + CharacterProps[type].range * 2,
-        getSize().y + CharacterProps[type].range * 2);
+    range = RangeComponent(x - CharacterProperties[type].range, y - CharacterProperties[type].range, getSize().x + CharacterProperties[type].range * 2,
+        getSize().y + CharacterProperties[type].range * 2);
 
-    attackSpeed      = CharacterProps[type].attackSpeed;
+    attackSpeed      = CharacterProperties[type].attackSpeed;
     attackSpeedTimer = 0.0f;
 }
 
@@ -30,7 +29,7 @@ void EnemyComponent::Update(float delta, HeroComponent* hero)
     if(chasing)
     {
         FlipTexture(dif.x > 0);
-        speed = { -dir.x * CharacterProps[type].moveSpeed * delta , -dir.y * CharacterProps[type].moveSpeed * delta };
+        speed = { -dir.x * CharacterProperties[type].moveSpeed * delta , -dir.y * CharacterProperties[type].moveSpeed * delta };
     }
 }
 

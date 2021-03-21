@@ -143,7 +143,7 @@ void GameplayScreen::CheckHeroCollision(float delta)
             {
                 enemy->attackSpeedTimer += delta;
                 sf::Vector2f to = { hero->GetCenter().x + RandFloat(-15, 15), hero->GetCenter().y + RandFloat(-15, 15) };
-                level->projectiles.push_back(CreatePTR<ProjectileComponent>(enemy->GetCenter(),to));
+                level->projectiles.push_back(CreatePTR<ProjectileComponent>(CharacterProperties[enemy->type].projectileType, enemy->GetCenter(),to));
             }
         }
     }

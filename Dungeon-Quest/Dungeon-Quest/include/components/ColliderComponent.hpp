@@ -1,28 +1,17 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
 
-#include "../Defines.h"
-
+/*!
+ * Collider Component class is used to specify collider box of character or non character object in game. 
+ */
 struct ColliderComponent : public sf::RectangleShape
 {
-    ColliderComponent()
-    {
-        Setup();
-    }
-
-    ColliderComponent(float x, float y, float width, float height)
-    {
-        setPosition({ x, y - 2});
-        setSize({ abs(width - x) + TILE_SIZE, abs(height - y) + TILE_SIZE });
-        Setup();
-    }
+    ColliderComponent(); // Default constructor.
+    /*!
+     * Parametrized constructor. (To be used only for setting tile based collider box, ex. Walls)
+     */
+    ColliderComponent(float x, float y, float width, float height); 
 private:
-    void Setup()
-    {
-        setFillColor(sf::Color::Transparent);
-        setOutlineColor(sf::Color::Green);
-        setOutlineThickness(1.0f);
-    }
+    void Setup(); // Setup collider otiline color and size.
 };

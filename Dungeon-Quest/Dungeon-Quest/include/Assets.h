@@ -6,11 +6,14 @@
 #include <map>
 #include <components/CharacterComponent.h>
 
+/*!
+ * Assets class containes all assets used in game. 
+ */
 struct Assets
 {
     static inline std::map<CharacterType, sf::Texture[3][4]> CharacterTextures;
     static inline sf::Texture HeartTexture[3];
-    static inline sf::Texture FireTextures[4];
+    static inline std::map<ProjectileType, sf::Texture[4]> ProjectileTextures;
     static void LoadAssets();
 
 private:

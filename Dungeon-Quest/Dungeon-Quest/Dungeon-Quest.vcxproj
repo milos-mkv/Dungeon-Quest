@@ -160,13 +160,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\CharacterComponent.cpp" />
+    <ClCompile Include="src\ColliderComponent.cpp" />
+    <ClCompile Include="src\DetectionComponent.cpp" />
     <ClCompile Include="src\Hero.cpp" />
     <ClCompile Include="src\Assets.cpp" />
-    <ClCompile Include="src\Enemy.cpp" />
+    <ClCompile Include="src\EnemyComponent.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Level.cpp" />
     <ClCompile Include="src\LoadingScreen.cpp" />
     <ClCompile Include="src\GameplayScreen.cpp" />
+    <ClCompile Include="src\ProjectileComponent.cpp" />
+    <ClCompile Include="src\RangeComponent.cpp" />
     <ClCompile Include="src\Screen.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>

@@ -1,24 +1,14 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
 
+/*!
+ * Range Component class is used for createing attack range boxes of enemies. 
+ */
 struct RangeComponent : public sf::RectangleShape
 {
-    RangeComponent()
-    {
-        Setup();
-    }
-    RangeComponent(float x, float y, float width, float height)
-    {
-        setPosition(x, y);
-        setSize({ width, height });
-        Setup();
-    }
+    RangeComponent(); // Default constructor.
+    RangeComponent(float x, float y, float width, float height); // Parametrized constructor.
 private:
-    void Setup()
-    {
-        setFillColor(sf::Color::Transparent);
-        setOutlineColor(sf::Color::Yellow);
-        setOutlineThickness(1.0f);
-    }
+    void Setup(); // Setup collider otiline color and size.
 };
