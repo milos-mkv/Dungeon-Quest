@@ -9,11 +9,11 @@ static sf::Vector2f GetVectorDiff(const sf::Vector2f& collider, const sf::Vector
 }
 
 CharacterComponent::CharacterComponent(CharacterType type, float x, float y)
-    : type(type), state(CharacterState::IDLE), attackType(CharacterAttackTypes[type])
+    : type(type), state(CharacterState::IDLE), attackType(CharacterProps[type].attackType)
 {
     setPosition({ x, y });                                          // Setting collider position.
-    setSize(CharacterColliderSizes[type]);                          // Setting collider size.
-    sf::Vector2f diff = GetVectorDiff(CharacterColliderSizes[type], CharacterSpriteSizes[type]);
+    setSize(CharacterProps[type].colliderSize);                     // Setting collider size.
+    sf::Vector2f diff = GetVectorDiff(CharacterProps[type].colliderSize, CharacterProps[type].spriteSize);
     sprite.setPosition({ x - diff.x / 2, y - diff.y });             // Setting sprite position.
     sprite.setTexture(Assets::CharacterTextures[type][state][0]);   // Setting texture for character.
 }
@@ -31,13 +31,15 @@ void CharacterComponent::UpdateAnimation(float delta)
 void CharacterComponent::Draw()
 {
     Game::window->draw(sprite); // Draw character sprite.
+#ifdef DEBUG_MODE
     Game::window->draw(*this);  // Draw character collider box.
+#endif
 }
 
 void CharacterComponent::FlipTexture(bool flip)
 {
     if(flip)
-        sprite.setTextureRect(sf::IntRect(CharacterSpriteSizes[type].x, 0, -CharacterSpriteSizes[type].x, CharacterSpriteSizes[type].y));
+        sprite.setTextureRect(sf::IntRect(CharacterProps[type].spriteSize.x, 0, -CharacterProps[type].spriteSize.x, CharacterProps[type].spriteSize.y));
     else
-        sprite.setTextureRect(sf::IntRect(0, 0, CharacterSpriteSizes[type].x, CharacterSpriteSizes[type].y));
+        sprite.setTextureRect(sf::IntRect(0, 0, CharacterProps[type].spriteSize.x, CharacterProps[type].spriteSize.y));
 }

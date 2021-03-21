@@ -5,48 +5,41 @@
 #include <SFML/Graphics.hpp>
 #include <Game.h>
 
-#define ENEMY_SPEED          50
-#define ENEMY_DETECTION_SIZE 70
-
-static const int EnemyRanges[2] = { 1, 50 };
-
+constexpr int ENEMY_DETECTION_SIZE = 70;           // Enemy detection box size;
 
 EnemyComponent::EnemyComponent(CharacterType type, float x, float y)
     : CharacterComponent(type, x, y)
 {
-    detection = DetectionComponent(x - ENEMY_DETECTION_SIZE, y - ENEMY_DETECTION_SIZE, 
-        CharacterColliderSizes[type].x + ENEMY_DETECTION_SIZE * 2, CharacterColliderSizes[type].y + ENEMY_DETECTION_SIZE * 2);
+    detection = DetectionComponent(x - ENEMY_DETECTION_SIZE, y - ENEMY_DETECTION_SIZE, getSize().x + ENEMY_DETECTION_SIZE * 2, 
+        getSize().y + ENEMY_DETECTION_SIZE * 2);
 
-    range = RangeComponent(x - EnemyRanges[CharacterAttackTypes[type]], y - EnemyRanges[CharacterAttackTypes[type]], 
-        CharacterColliderSizes[type].x + EnemyRanges[CharacterAttackTypes[type]] * 2, CharacterColliderSizes[type].y + EnemyRanges[CharacterAttackTypes[type]] * 2);
+    range = RangeComponent(x - CharacterProps[type].range, y - CharacterProps[type].range, getSize().x + CharacterProps[type].range * 2,
+        getSize().y + CharacterProps[type].range * 2);
 
-    attackSpeed      = 0.02f;
-    attackSpeedTimer = 0.f;
+    attackSpeed      = CharacterProps[type].attackSpeed;
+    attackSpeedTimer = 0.0f;
 }
 
 void EnemyComponent::Update(float delta, HeroComponent* hero)
 {
-    sf::Vector2f diff = getPosition() - hero->getPosition();
-    sf::Vector2f dir  = normalize(diff);
+    sf::Vector2f dif = getPosition() - hero->getPosition();
+    sf::Vector2f dir = normalize(dif);
 
-    if (attackSpeedTimer > 0.f)
-    {
-        attackSpeedTimer += delta;
-        if (attackSpeedTimer > attackSpeed)
-            attackSpeedTimer = 0.f;
-    }
+    UpdateAttackStatus(delta);
 
     if(chasing)
     {
-        FlipTexture(diff.x > 0);
-        speed = { -dir.x * ENEMY_SPEED * delta , -dir.y * ENEMY_SPEED * delta };
+        FlipTexture(dif.x > 0);
+        speed = { -dir.x * CharacterProps[type].moveSpeed * delta , -dir.y * CharacterProps[type].moveSpeed * delta };
     }
 }
 
 void EnemyComponent::Draw()
 {
     Game::window->draw(sprite);     // Draw character sprite.
+#ifdef DEBUG_MODE
     Game::window->draw(*this);      // Draw character collider box.
     Game::window->draw(detection);  // Draw detection box.
     Game::window->draw(range);      // Draw detection box.
+#endif
 }

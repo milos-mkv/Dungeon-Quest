@@ -8,6 +8,8 @@
 constexpr auto PROJECTILE_SPEED          =  150.f;
 constexpr auto PROJECTILE_EXTRA_DISTANCE = -150.f;
 
+enum ProjectileType { FIRE, ARROW };
+
 struct ProjectileComponent : public sf::RectangleShape, public AnimationComponent
 {
     sf::Vector2f targetPosition;
@@ -18,8 +20,10 @@ struct ProjectileComponent : public sf::RectangleShape, public AnimationComponen
     {
         setPosition(position);
         setSize({ 5.f, 5.f });
+#ifdef DEBUG_MODE
         setOutlineColor(sf::Color::Blue);
         setOutlineThickness(1.0f);
+#endif
         setTexture(&Assets::FireTextures[0]);
 
         sf::Vector2f diff2 = position - targetPosition;

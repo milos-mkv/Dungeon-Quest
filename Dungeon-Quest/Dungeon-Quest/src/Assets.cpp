@@ -26,9 +26,14 @@ void Assets::LoadItemTextures()
     ASSERT(HeartTexture[0].loadFromFile("assets/frames/ui_heart_full.png"),  "Failed to load texture!");
     ASSERT(HeartTexture[1].loadFromFile("assets/frames/ui_heart_half.png"),  "Failed to load texture!");
     ASSERT(HeartTexture[2].loadFromFile("assets/frames/ui_heart_empty.png"), "Failed to load texture!");
-    for (int i = 0; i < 4; i++)
-    {
-        ASSERT(FireTextures[i].loadFromFile("assets/fire" + std::to_string(i) + ".png"), "Failed to load texture!");
-    }
+  //  for (int i = 0; i < 4; i++)
+  //  {
+  //      ASSERT(FireTextures[i].loadFromFile("assets/fire" + std::to_string(i) + ".png"), "Failed to load texture!");
+  //  }
+    ASSERT(FireTextures[0].loadFromFile("assets/arrow.png"), "Failed to load texture!");
+    ASSERT(FireTextures[1].loadFromFile("assets/arrow.png"), "Failed to load texture!");
+    ASSERT(FireTextures[2].loadFromFile("assets/arrow.png"), "Failed to load texture!");
+    ASSERT(FireTextures[3].loadFromFile("assets/arrow.png"), "Failed to load texture!");
+
 }
 

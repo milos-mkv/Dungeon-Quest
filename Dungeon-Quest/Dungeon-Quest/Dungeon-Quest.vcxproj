@@ -172,6 +172,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\components\AnimationComponent.h" />
+    <ClInclude Include="include\components\AttackComponent.hpp" />
     <ClInclude Include="include\components\CharacterComponent.h" />
     <ClInclude Include="include\components\DetectionComponent.hpp" />
     <ClInclude Include="include\components\EnemyComponent.hpp" />

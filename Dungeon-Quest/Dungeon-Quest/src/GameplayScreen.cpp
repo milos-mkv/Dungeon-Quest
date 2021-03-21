@@ -11,20 +11,20 @@ static sf::View* uiview;
 
 #include <components/ProjectileComponent.hpp>
 
-
 GameplayScreen::GameplayScreen()
 {
     level  = new Level(1);
     camera = new sf::View(sf::FloatRect(0, 32, VIEWPORT_WIDTH, VIEWPORT_HEIGHT));
-    hero   = new HeroComponent(CharacterType::KNIGHT, 100, 100);
+    hero   = new HeroComponent(CharacterType::WIZZARD, 100, 100);
     uiview = new sf::View(sf::FloatRect(0, 32, VIEWPORT_WIDTH, VIEWPORT_HEIGHT));
-    level->enemies.push_back(new EnemyComponent(CharacterType::BIG_DEMON,  350, 100));
+    level->enemies.push_back(new EnemyComponent(CharacterType::BIG_ZOMBIE,  350, 100));
     level->enemies.push_back(new EnemyComponent(CharacterType::ORC_SHAMAN, 350, 350));
+    level->enemies.push_back(new EnemyComponent(CharacterType::SKELET, 250, 100));
+    level->enemies.push_back(new EnemyComponent(CharacterType::MASKED_ORC, 270, 100));
 }
-float TIME = 0;
+
 void GameplayScreen::Render(float delta)
 {
-    TIME += delta;
     hero->ProcessInput(delta);
 
     for(EnemyComponent* enemy : level->enemies)
@@ -52,7 +52,7 @@ void GameplayScreen::Render(float delta)
         enemy->Draw();
     hero->Draw();
 
-    for(std::vector<PTR<ProjectileComponent>>::iterator iter = level->projectiles.begin(); iter < level->projectiles.end(); iter++)
+    for(auto iter = level->projectiles.begin(); iter < level->projectiles.end(); iter++)
     {
         if ((*iter)->done)
         {
@@ -62,11 +62,12 @@ void GameplayScreen::Render(float delta)
         (*iter)->Update(delta);
         Game::window->draw(**iter);
     }
+#ifdef DEBUG_MODE
     for (auto& wall : level->walls)
     {
         Game::window->draw(wall);
     }
-
+#endif
 
     Game::window->setView(*uiview);
 
@@ -141,16 +142,18 @@ void GameplayScreen::CheckHeroCollision(float delta)
             if (enemy->attackSpeedTimer == 0.f && enemy->attackType == CharacterAttackType::RANGED)
             {
                 enemy->attackSpeedTimer += delta;
-                level->projectiles.push_back(CreatePTR<ProjectileComponent>(enemy->getPosition(), hero->getPosition()));
+                sf::Vector2f to = { hero->GetCenter().x + RandFloat(-15, 15), hero->GetCenter().y + RandFloat(-15, 15) };
+                level->projectiles.push_back(CreatePTR<ProjectileComponent>(enemy->GetCenter(),to));
             }
         }
     }
 
-    for (std::vector<PTR<ProjectileComponent>>::iterator iter = level->projectiles.begin(); iter < level->projectiles.end(); iter++)
+    for (auto iter = level->projectiles.begin(); iter < level->projectiles.end(); iter++)
     {
         if (CheckCollision(hero, (*iter).get()))
         {
             level->projectiles.erase(iter);
+            hero->life--;
             continue;
         }
     }
