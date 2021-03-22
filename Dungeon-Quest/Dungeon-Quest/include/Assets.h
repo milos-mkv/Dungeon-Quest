@@ -14,6 +14,8 @@ struct Assets
     static inline std::map<CharacterType, sf::Texture[3][4]> CharacterTextures;
     static inline sf::Texture HeartTexture[3];
     static inline std::map<ProjectileType, sf::Texture[4]> ProjectileTextures;
+    static inline std::map<CharacterType, sf::Texture> WeaponTextures;
+    static inline sf::Texture CursorTexture;
     static void LoadAssets();
 
 private:

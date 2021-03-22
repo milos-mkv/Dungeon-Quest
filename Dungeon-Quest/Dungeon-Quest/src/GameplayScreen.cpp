@@ -11,6 +11,14 @@ static sf::View* uiview;
 
 #include <components/ProjectileComponent.hpp>
 
+sf::Vector2f GetCursorWordPosition(sf::View* camera)
+{
+    return {
+        Map(sf::Mouse::getPosition().x, 0, Game::window->getSize().x, camera->getCenter().x - VIEWPORT_WIDTH /2, camera->getCenter().x + VIEWPORT_WIDTH / 2),
+        Map(sf::Mouse::getPosition().y, 0, Game::window->getSize().y, camera->getCenter().y - VIEWPORT_HEIGHT / 2, camera->getCenter().y + VIEWPORT_HEIGHT / 2)
+    };
+}
+
 GameplayScreen::GameplayScreen()
 {
     level  = new Level(1);
@@ -27,7 +35,13 @@ void GameplayScreen::Render(float delta)
 {
     hero->ProcessInput(delta);
 
-    for(EnemyComponent* enemy : level->enemies)
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && hero->attackSpeedTimer == 0.f)
+    {
+        hero->attackSpeedTimer += delta;
+        level->heroProjectiles.push_back(CreatePTR<ProjectileComponent>(CharacterProperties[hero->type].projectileType, hero->GetCenter(), GetCursorWordPosition(camera)));
+    }
+
+    for (EnemyComponent* enemy : level->enemies)
         enemy->Update(delta, hero);
     CheckHeroCollision(delta);
 
@@ -36,8 +50,8 @@ void GameplayScreen::Render(float delta)
     for (EnemyComponent* enemy : level->enemies)
         enemy->UpdateAnimation(delta);
     camera->setCenter({ hero->getPosition().x + TILE_SIZE / 2, hero->getPosition().y + TILE_SIZE / 2 });
-    
-    
+
+
     for (EnemyComponent* enemy : level->enemies)
     {
         enemy->move(enemy->speed);
@@ -52,11 +66,22 @@ void GameplayScreen::Render(float delta)
         enemy->Draw();
     hero->Draw();
 
-    for(auto iter = level->projectiles.begin(); iter < level->projectiles.end(); iter++)
+    for (auto iter = level->heroProjectiles.begin(); iter < level->heroProjectiles.end(); iter++)
     {
         if ((*iter)->done)
         {
-            level->projectiles.erase(iter);       
+            level->heroProjectiles.erase(iter);
+            continue;
+        }
+        (*iter)->Update(delta);
+        Game::window->draw(**iter);
+    }
+
+    for (auto iter = level->projectiles.begin(); iter < level->projectiles.end(); iter++)
+    {
+        if ((*iter)->done)
+        {
+            level->projectiles.erase(iter);
             continue;
         }
         (*iter)->Update(delta);
@@ -68,6 +93,11 @@ void GameplayScreen::Render(float delta)
         Game::window->draw(wall);
     }
 #endif
+    sf::Sprite mouse;
+    mouse.setTexture(Assets::CursorTexture);
+    mouse.setPosition(GetCursorWordPosition(camera));
+    mouse.setScale({ 0.2f, 0.2f });
+    Game::window->draw(mouse);
 
     Game::window->setView(*uiview);
 
@@ -80,6 +110,7 @@ void GameplayScreen::Render(float delta)
         Game::window->draw(life);
 
     }
+
 }
 
 GameplayScreen::~GameplayScreen()
@@ -139,11 +170,19 @@ void GameplayScreen::CheckHeroCollision(float delta)
         {
             enemy->speed = { 0, 0 };
             enemy->state = CharacterState::IDLE;
+
+
+
             if (enemy->attackSpeedTimer == 0.f && enemy->attackType == CharacterAttackType::RANGED)
             {
                 enemy->attackSpeedTimer += delta;
                 sf::Vector2f to = { hero->GetCenter().x + RandFloat(-15, 15), hero->GetCenter().y + RandFloat(-15, 15) };
                 level->projectiles.push_back(CreatePTR<ProjectileComponent>(CharacterProperties[enemy->type].projectileType, enemy->GetCenter(),to));
+            }
+            else if (enemy->attackType == CharacterAttackType::MELEE && enemy->attackSpeedTimer == 0.f)
+            {
+                hero->life--;
+                enemy->attackSpeedTimer += delta;
             }
         }
     }
@@ -156,6 +195,22 @@ void GameplayScreen::CheckHeroCollision(float delta)
             hero->life--;
             continue;
         }
+    }
+
+    for (auto iter = level->heroProjectiles.begin(); iter < level->heroProjectiles.end(); iter++)
+    {
+        for (auto enemy = level->enemies.begin(); enemy < level->enemies.end(); enemy++)
+        {
+            if (CheckCollision((*enemy), (*iter).get()))
+            {
+                level->heroProjectiles.erase(iter);
+                (*enemy)->life--;
+                if ((*enemy)->life == 0)
+                    level->enemies.erase(enemy);
+                continue;
+            }
+        }
+        
     }
 
 

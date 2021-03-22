@@ -66,9 +66,9 @@ static std::map<CharacterType, CharacterDefaultProperties> CharacterProperties =
 { 
     { CharacterType::ELF,           { { 16, 28 }, { 14, 18 }, CharacterAttackType::RANGED, 100, 1, ProjectileType::ARROW, 1,  3 } },
     { CharacterType::KNIGHT,        { { 16, 28 }, { 14, 18 }, CharacterAttackType::MELEE,  100, 1, ProjectileType::NONE,  1,  3 } },
-    { CharacterType::WIZZARD,       { { 16, 28 }, { 14, 18 }, CharacterAttackType::RANGED, 100, 1, ProjectileType::FIRE,  1,  3 } },
+    { CharacterType::WIZZARD,       { { 16, 28 }, { 14, 18 }, CharacterAttackType::RANGED, 100, 0.5, ProjectileType::ARROW,  1,  3 } },
     { CharacterType::OGRE,          { { 32, 32 }, { 20, 25 }, CharacterAttackType::MELEE,  50,  1, ProjectileType::NONE,  1,  3 } },
-    { CharacterType::ORC_SHAMAN,    { { 16, 20 }, { 12, 16 }, CharacterAttackType::RANGED, 70,  0.01, ProjectileType::FIRE,  50, 3 } },
+    { CharacterType::ORC_SHAMAN,    { { 16, 20 }, { 12, 16 }, CharacterAttackType::RANGED, 70,  1, ProjectileType::FIRE,  50, 3 } },
     { CharacterType::ORC_WARRIOR,   { { 16, 20 }, { 12, 16 }, CharacterAttackType::MELEE,  70,  1, ProjectileType::NONE,  1,  3 } },
     { CharacterType::BIG_DEMON,     { { 31, 35 }, { 25, 25 }, CharacterAttackType::RANGED, 50,  1, ProjectileType::FIRE,  70, 3 } },
     { CharacterType::CHORT,         { { 16, 24 }, { 12, 20 }, CharacterAttackType::RANGED, 50,  1, ProjectileType::FIRE,  70, 3 } },
@@ -76,5 +76,5 @@ static std::map<CharacterType, CharacterDefaultProperties> CharacterProperties =
     { CharacterType::BIG_ZOMBIE,    { { 32, 34 }, { 25, 25 }, CharacterAttackType::MELEE,  50,  1, ProjectileType::NONE,  1,  3 } },
     { CharacterType::GOBLIN,        { { 16, 16 }, { 12, 12 }, CharacterAttackType::MELEE,  50,  1, ProjectileType::NONE,  1,  3 } },
     { CharacterType::IMP,           { { 16, 16 }, { 12, 12 }, CharacterAttackType::MELEE,  50,  1, ProjectileType::NONE,  1,  3 } },
-    { CharacterType::MASKED_ORC,    { { 16, 20 }, { 12, 16 }, CharacterAttackType::RANGED, 50,  0.01, ProjectileType::ARROW, 50, 3 } },
+    { CharacterType::MASKED_ORC,    { { 16, 20 }, { 12, 16 }, CharacterAttackType::RANGED, 50,  1, ProjectileType::ARROW, 50, 3 } },
 };

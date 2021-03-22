@@ -8,6 +8,8 @@
 HeroComponent::HeroComponent(CharacterType type, float x, float y)
     : CharacterComponent(type, x, y)
 {
+    attackSpeed      = CharacterProperties[type].attackSpeed;
+    attackSpeedTimer = 0.0f;
 }
 
 void HeroComponent::ProcessInput(float delta)
@@ -34,6 +36,7 @@ void HeroComponent::ProcessInput(float delta)
     }
 
     state = (speed.x || speed.y) ? CharacterState::RUN : CharacterState::IDLE;
+    UpdateAttackStatus(delta);
 
     UpdateAnimation(delta);
 }

@@ -30,11 +30,11 @@ void Assets::LoadItemTextures()
     for (int i = 0; i < 4; i++)
     {
         ASSERT(ProjectileTextures[ProjectileType::FIRE][i].loadFromFile("assets/fire" + std::to_string(i) + ".png"), "Failed to load texture!");
+        ASSERT(ProjectileTextures[ProjectileType::ARROW][i].loadFromFile("assets/arrow.png"), "Failed to load texture!");
     }
-    ASSERT(ProjectileTextures[ProjectileType::ARROW][0].loadFromFile("assets/arrow.png"), "Failed to load texture!");
-    ASSERT(ProjectileTextures[ProjectileType::ARROW][1].loadFromFile("assets/arrow.png"), "Failed to load texture!");
-    ASSERT(ProjectileTextures[ProjectileType::ARROW][2].loadFromFile("assets/arrow.png"), "Failed to load texture!");
-    ASSERT(ProjectileTextures[ProjectileType::ARROW][3].loadFromFile("assets/arrow.png"), "Failed to load texture!");
-
+    ASSERT(WeaponTextures[CharacterType::KNIGHT].loadFromFile("assets/frames/weapon_regular_sword.png"), "Failed to load texture!");
+    ASSERT(WeaponTextures[CharacterType::ELF].loadFromFile("assets/frames/weapon_knife.png"), "Failed to load texture!");
+    ASSERT(WeaponTextures[CharacterType::WIZZARD].loadFromFile("assets/frames/weapon_green_magic_staff.png"), "Failed to load texture!");
+    ASSERT(CursorTexture.loadFromFile("assets/cursor1.png"), "Failed to load texture!");
 }
 

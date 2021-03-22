@@ -32,6 +32,7 @@ struct Level
     std::vector<ColliderComponent> walls;
     std::vector<EnemyComponent*> enemies;
     std::vector<PTR<ProjectileComponent>> projectiles;
+    std::vector<PTR<ProjectileComponent>> heroProjectiles;
 
     Level(int level);
 };
