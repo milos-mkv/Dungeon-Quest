@@ -2,11 +2,17 @@
 
 #include <Assets.h>
 
+constexpr auto PROJECTILE_SPEED = 150.f;
+
+static const float PROJECTILE_DISTANCES[4] = { -150.f, -150.f, -150.f, -30.f };
+
+
 ProjectileComponent::ProjectileComponent(ProjectileType type, const sf::Vector2f& position, const sf::Vector2f& targetPosition)
-    : type(type), targetPosition(targetPosition + normalize(position - targetPosition) * PROJECTILE_EXTRA_DISTANCE), done(false)
+    : type(type), targetPosition(position + normalize(position - targetPosition) * PROJECTILE_DISTANCES[type]), done(false)
 {
     setPosition(position);
-    setSize({ 5.f, 5.f });
+    setSize((sf::Vector2f)Assets::ProjectileTextures[type][index].getSize());
+    setOrigin({ 2.5f, 2.5f });
 #ifdef DEBUG_MODE
     setOutlineColor(sf::Color::Blue);
     setOutlineThickness(1.0f);
@@ -14,7 +20,7 @@ ProjectileComponent::ProjectileComponent(ProjectileType type, const sf::Vector2f
     setTexture(&Assets::ProjectileTextures[type][0]);
 
     sf::Vector2f diff2 = position - targetPosition;
-    rotate(atan2(diff2.y, diff2.x) * (180 / 3.14));
+    setRotation(atan2(diff2.y, diff2.x) * (180 / 3.14));
 }
 
 void ProjectileComponent::Update(float delta)

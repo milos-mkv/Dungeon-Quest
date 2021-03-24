@@ -169,6 +169,7 @@
     <ClCompile Include="src\Level.cpp" />
     <ClCompile Include="src\LoadingScreen.cpp" />
     <ClCompile Include="src\GameplayScreen.cpp" />
+    <ClCompile Include="src\ParticleComponent.cpp" />
     <ClCompile Include="src\ProjectileComponent.cpp" />
     <ClCompile Include="src\RangeComponent.cpp" />
     <ClCompile Include="src\Screen.cpp" />
@@ -180,6 +181,7 @@
     <ClInclude Include="include\components\CharacterComponent.h" />
     <ClInclude Include="include\components\DetectionComponent.hpp" />
     <ClInclude Include="include\components\EnemyComponent.hpp" />
+    <ClInclude Include="include\components\ParticleComponent.hpp" />
     <ClInclude Include="include\components\ProjectileComponent.hpp" />
     <ClInclude Include="include\components\RangeComponent.hpp" />
     <ClInclude Include="include\Level.h" />

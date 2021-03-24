@@ -5,14 +5,14 @@
 #include <SFML/System/Vector2.hpp>
 #include <cmath>
 
-//#define DEBUG_MODE
+#define DEBUG_MODE
 
 #define PTR std::shared_ptr
 #define CreatePTR std::make_shared
 
 constexpr int TILE_SIZE       = 16;
-constexpr int VIEWPORT_WIDTH  = 247;
-constexpr int VIEWPORT_HEIGHT = 135;
+constexpr int VIEWPORT_WIDTH  = 247 * 2;
+constexpr int VIEWPORT_HEIGHT = 135 * 2;
 
 
 static sf::Vector2f normalize(const sf::Vector2f& source)

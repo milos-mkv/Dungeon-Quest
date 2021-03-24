@@ -23,7 +23,7 @@ GameplayScreen::GameplayScreen()
 {
     level  = new Level(1);
     camera = new sf::View(sf::FloatRect(0, 32, VIEWPORT_WIDTH, VIEWPORT_HEIGHT));
-    hero   = new HeroComponent(CharacterType::WIZZARD, 100, 100);
+    hero   = new HeroComponent(CharacterType::ELF, 100, 100);
     uiview = new sf::View(sf::FloatRect(0, 32, VIEWPORT_WIDTH, VIEWPORT_HEIGHT));
     level->enemies.push_back(new EnemyComponent(CharacterType::BIG_ZOMBIE,  350, 100));
     level->enemies.push_back(new EnemyComponent(CharacterType::ORC_SHAMAN, 350, 350));
@@ -34,7 +34,6 @@ GameplayScreen::GameplayScreen()
 void GameplayScreen::Render(float delta)
 {
     hero->ProcessInput(delta);
-
     if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && hero->attackSpeedTimer == 0.f)
     {
         hero->attackSpeedTimer += delta;
@@ -62,6 +61,7 @@ void GameplayScreen::Render(float delta)
 
     Game::window->setView(*camera);
     Game::window->draw(level->mapSprite);
+
     for (EnemyComponent* enemy : level->enemies)
         enemy->Draw();
     hero->Draw();
@@ -87,6 +87,18 @@ void GameplayScreen::Render(float delta)
         (*iter)->Update(delta);
         Game::window->draw(**iter);
     }
+
+    for (auto iter = level->particles.begin(); iter < level->particles.end(); iter++)
+    {
+        if ((*iter)->done)
+        {
+            level->particles.erase(iter);
+            continue;
+        }       
+        (*iter)->UpdateAnimation(delta);
+        Game::window->draw((*iter)->sprite);
+    }
+
 #ifdef DEBUG_MODE
     for (auto& wall : level->walls)
     {
@@ -111,6 +123,14 @@ void GameplayScreen::Render(float delta)
 
     }
 
+    for (int i = hero->life; i < 3; i++)
+    {
+        life.setTexture(Assets::HeartTexture[2]);
+        life.setPosition(i * TILE_SIZE + 10, 35);
+        Game::window->draw(life);
+
+    }
+
 }
 
 GameplayScreen::~GameplayScreen()
@@ -119,8 +139,6 @@ GameplayScreen::~GameplayScreen()
     delete hero;
     delete uiview;
     delete camera;
-    for (EnemyComponent* enemy : level->enemies)
-        delete enemy;
 }
 
 static bool CheckCollisionX(CharacterComponent* c1, sf::RectangleShape *c2)
@@ -155,7 +173,24 @@ void GameplayScreen::CheckHeroCollision(float delta)
             if (CheckCollisionX(enemy, &wall)) enemy->speed.x = 0;
             if (CheckCollisionY(enemy, &wall)) enemy->speed.y = 0;
         }
-        
+
+        for (auto iter = level->heroProjectiles.begin(); iter < level->heroProjectiles.end(); iter++)
+        {
+            if (CheckCollision((*iter).get(), &wall))
+            {
+                level->particles.push_back(CreatePTR<ParticleComponent>(ParticleType::PUF, (*iter)->getPosition().x, (*iter)->getPosition().y));
+                level->heroProjectiles.erase(iter);
+            }
+        }
+
+        for (auto iter = level->projectiles.begin(); iter < level->projectiles.end(); iter++)
+        {
+            if (CheckCollision((*iter).get(), &wall))
+            {
+                level->particles.push_back(CreatePTR<ParticleComponent>(ParticleType::PUF, (*iter)->getPosition().x, (*iter)->getPosition().y));
+                level->projectiles.erase(iter);
+            }
+        }
     }
 
     for (EnemyComponent* enemy : level->enemies)
@@ -171,8 +206,6 @@ void GameplayScreen::CheckHeroCollision(float delta)
             enemy->speed = { 0, 0 };
             enemy->state = CharacterState::IDLE;
 
-
-
             if (enemy->attackSpeedTimer == 0.f && enemy->attackType == CharacterAttackType::RANGED)
             {
                 enemy->attackSpeedTimer += delta;
@@ -182,6 +215,7 @@ void GameplayScreen::CheckHeroCollision(float delta)
             else if (enemy->attackType == CharacterAttackType::MELEE && enemy->attackSpeedTimer == 0.f)
             {
                 hero->life--;
+                if (hero->life < 0) hero->life = 0;
                 enemy->attackSpeedTimer += delta;
             }
         }
@@ -193,6 +227,7 @@ void GameplayScreen::CheckHeroCollision(float delta)
         {
             level->projectiles.erase(iter);
             hero->life--;
+            if (hero->life < 0) hero->life = 0;
             continue;
         }
     }
@@ -205,9 +240,10 @@ void GameplayScreen::CheckHeroCollision(float delta)
             {
                 level->heroProjectiles.erase(iter);
                 (*enemy)->life--;
+                (*enemy)->chasing = true;
                 if ((*enemy)->life == 0)
                     level->enemies.erase(enemy);
-                continue;
+                break;
             }
         }
         

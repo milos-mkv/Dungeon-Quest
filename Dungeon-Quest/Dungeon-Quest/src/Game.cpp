@@ -45,8 +45,9 @@ void Game::PollEvents()
     while (window->pollEvent(event))
     {
         if (event.type == sf::Event::Closed)
+        {
+            std::cout << "CLOSE REQ" << std::endl;
             window->close();
-        if (event.key.code == sf::Keyboard::Escape)
-            window->close();
+        }
     }
 }

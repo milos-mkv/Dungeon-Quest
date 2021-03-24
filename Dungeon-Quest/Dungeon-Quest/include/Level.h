@@ -7,6 +7,7 @@
 #include <vector>
 #include <components/EnemyComponent.hpp>
 #include <components/ProjectileComponent.hpp>
+#include <components/ParticleComponent.hpp>
 
 static const int LEVELS_COUNT = 1;
 
@@ -33,6 +34,7 @@ struct Level
     std::vector<EnemyComponent*> enemies;
     std::vector<PTR<ProjectileComponent>> projectiles;
     std::vector<PTR<ProjectileComponent>> heroProjectiles;
+    std::vector<PTR<ParticleComponent>> particles;
 
     Level(int level);
 };
