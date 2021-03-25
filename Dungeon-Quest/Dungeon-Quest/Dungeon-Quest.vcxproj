@@ -96,7 +96,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)\Libs\SFML-2.5.1\lib;C:\Users\mimilos\Desktop\box2d-2.4.1\build\bin\Debug</AdditionalLibraryDirectories>
-      <AdditionalDependencies>box2d.lib;sfml-system.lib;sfml-graphics.lib;sfml-window.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-audio.lib;sfml-system.lib;sfml-graphics.lib;sfml-window.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -117,7 +117,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)\Libs\SFML-2.5.1\lib;C:\Users\mimilos\Desktop\box2d-2.4.1\build\bin\Debug</AdditionalLibraryDirectories>
-      <AdditionalDependencies>box2d.lib;sfml-system.lib;sfml-graphics.lib;sfml-window.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-audio.lib;sfml-system.lib;sfml-graphics.lib;sfml-window.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -134,7 +134,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)\Libs\SFML-2.5.1\lib;C:\Users\mimilos\Desktop\box2d-2.4.1\build\bin\Debug</AdditionalLibraryDirectories>
-      <AdditionalDependencies>box2d.lib;sfml-system.lib;sfml-graphics.lib;sfml-window.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-audio.lib;sfml-system.lib;sfml-graphics.lib;sfml-window.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -155,7 +155,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)\Libs\SFML-2.5.1\lib;C:\Users\mimilos\Desktop\box2d-2.4.1\build\bin\Debug</AdditionalLibraryDirectories>
-      <AdditionalDependencies>box2d.lib;sfml-system.lib;sfml-graphics.lib;sfml-window.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-audio.lib;sfml-system.lib;sfml-graphics.lib;sfml-window.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -179,11 +179,13 @@
     <ClInclude Include="include\components\AnimationComponent.h" />
     <ClInclude Include="include\components\AttackComponent.hpp" />
     <ClInclude Include="include\components\CharacterComponent.h" />
+    <ClInclude Include="include\components\Component.hpp" />
     <ClInclude Include="include\components\DetectionComponent.hpp" />
     <ClInclude Include="include\components\EnemyComponent.hpp" />
     <ClInclude Include="include\components\ParticleComponent.hpp" />
     <ClInclude Include="include\components\ProjectileComponent.hpp" />
     <ClInclude Include="include\components\RangeComponent.hpp" />
+    <ClInclude Include="include\Entity.hpp" />
     <ClInclude Include="include\Level.h" />
     <ClInclude Include="include\LoadingScreen.h" />
     <ClInclude Include="include\Assets.h" />
