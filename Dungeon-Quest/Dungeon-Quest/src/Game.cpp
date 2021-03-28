@@ -1,14 +1,14 @@
 #include <Game.h>
 
-#include <LoadingScreen.h>
-#include <GameplayScreen.h>
+#include <screens/LoadingScreen.h>
+#include <screens/GameplayScreen.h>
 #include <string>
 #include <iostream>
 Game::Game()
 {
-    if (window != NULL)
+    if (window != nullptr)
         return;
-    window = CreatePTR<sf::RenderWindow>(sf::VideoMode().getDesktopMode(), "Dungeon Quest!", sf::Style::None);
+    window = CreatePTR<sf::RenderWindow>(sf::VideoMode::getDesktopMode(), "Dungeon Quest!", sf::Style::None);
     window->setMouseCursorVisible(false);
    // window->setVerticalSyncEnabled(true);
 

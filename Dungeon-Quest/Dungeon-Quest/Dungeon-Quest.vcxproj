@@ -159,24 +159,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\CharacterComponent.cpp" />
-    <ClCompile Include="src\ColliderComponent.cpp" />
-    <ClCompile Include="src\DetectionComponent.cpp" />
-    <ClCompile Include="src\Hero.cpp" />
     <ClCompile Include="src\Assets.cpp" />
-    <ClCompile Include="src\EnemyComponent.cpp" />
+    <ClCompile Include="src\EntityFactory.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Level.cpp" />
-    <ClCompile Include="src\LoadingScreen.cpp" />
-    <ClCompile Include="src\GameplayScreen.cpp" />
-    <ClCompile Include="src\ParticleComponent.cpp" />
-    <ClCompile Include="src\ProjectileComponent.cpp" />
-    <ClCompile Include="src\RangeComponent.cpp" />
-    <ClCompile Include="src\Screen.cpp" />
+    <ClCompile Include="src\screens\LoadingScreen.cpp" />
+    <ClCompile Include="src\screens\GameplayScreen.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\systems\CollisionDetectionSystem.cpp" />
+    <ClCompile Include="src\systems\EnemyEntitySystem.cpp" />
+    <ClCompile Include="src\systems\ParticleEntitySystem.cpp" />
+    <ClCompile Include="src\systems\PlayerEntitySystem.cpp" />
+    <ClCompile Include="src\systems\ProjectileEntitySystem.cpp" />
+    <ClCompile Include="src\systems\RenderSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\components\AnimationComponent.h" />
+    <ClInclude Include="include\components\AnimationComponent.hpp" />
     <ClInclude Include="include\components\AttackComponent.hpp" />
     <ClInclude Include="include\components\CharacterComponent.h" />
     <ClInclude Include="include\components\Component.hpp" />
@@ -185,16 +183,26 @@
     <ClInclude Include="include\components\ParticleComponent.hpp" />
     <ClInclude Include="include\components\ProjectileComponent.hpp" />
     <ClInclude Include="include\components\RangeComponent.hpp" />
+    <ClInclude Include="include\components\SpriteComponent.hpp" />
+    <ClInclude Include="include\Engine.hpp" />
     <ClInclude Include="include\Entity.hpp" />
-    <ClInclude Include="include\Level.h" />
-    <ClInclude Include="include\LoadingScreen.h" />
+    <ClInclude Include="include\EntityFactory.hpp" />
+    <ClInclude Include="include\Level.hpp" />
+    <ClInclude Include="include\screens\LoadingScreen.h" />
     <ClInclude Include="include\Assets.h" />
-    <ClInclude Include="include\GameplayScreen.h" />
-    <ClInclude Include="include\Screen.h" />
+    <ClInclude Include="include\screens\GameplayScreen.h" />
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\components\ColliderComponent.hpp" />
     <ClInclude Include="include\Defines.h" />
-    <ClInclude Include="include\components\HeroComponent.hpp" />
+    <ClInclude Include="include\components\PlayerComponent.hpp" />
+    <ClInclude Include="include\screens\Screen.hpp" />
+    <ClInclude Include="include\systems\CollisionDetectionSystem.hpp" />
+    <ClInclude Include="include\systems\EnemyEntitySystem.hpp" />
+    <ClInclude Include="include\systems\IEntitySystem.hpp" />
+    <ClInclude Include="include\systems\ParticleEntitySystem.hpp" />
+    <ClInclude Include="include\systems\PlayerEntitySystem.hpp" />
+    <ClInclude Include="include\systems\ProjectileEntitySystem.hpp" />
+    <ClInclude Include="include\systems\RenderSystem.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

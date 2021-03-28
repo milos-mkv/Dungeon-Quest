@@ -1,17 +1,17 @@
 #pragma once
 
-struct AttackComponent
-{
-    float attackSpeed;
-    float attackSpeedTimer;
+#include <components/Component.hpp>
 
-    AttackComponent() = default;
-    AttackComponent(float attackSpeed, float attackSpeedTimer)
-        : attackSpeed(attackSpeed), attackSpeedTimer(attackSpeedTimer) { }
+struct AttackComponent : public IComponent
+{
+    float speed;
+    float timer = 0.0F;
+
+    explicit AttackComponent(float speed) : speed(speed) { }
 
     void UpdateAttackStatus(float delta)
     {
-        if (attackSpeedTimer > 0.f && (attackSpeedTimer += delta) > attackSpeed)
-            attackSpeedTimer = 0.f;
+        if (timer > 0.0F && (timer += delta) > speed)
+            timer = 0.0F;
     }
 };

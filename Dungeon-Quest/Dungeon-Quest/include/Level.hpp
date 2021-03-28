@@ -2,14 +2,9 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "Defines.h"
-#include "components/ColliderComponent.hpp"
+#include <Defines.h>
 #include <vector>
-#include <components/EnemyComponent.hpp>
-#include <components/ProjectileComponent.hpp>
-#include <components/ParticleComponent.hpp>
-
-static const int LEVELS_COUNT = 1;
+#include <Entity.hpp>
 
 static const int LEVEL1_WALLS[][4] = 
 {
@@ -27,15 +22,15 @@ static const int LEVEL1_WALLS[][4] =
 
 struct Level
 {
-    sf::Texture mapTexture;
-    sf::Sprite  mapSprite;
+    std::vector<PTR<Entity>> walls;
+    std::vector<PTR<Entity>> enemies;
+    PTR<Entity>              player;
+    std::vector<PTR<Entity>> projectiles;
+    std::vector<PTR<Entity>> particles;
+    PTR<sf::View>            uiview;
+    PTR<sf::View>            camera;
+    sf::Sprite               mapSprite;
 
-    std::vector<ColliderComponent> walls;
-    std::vector<EnemyComponent*> enemies;
-    std::vector<PTR<ProjectileComponent>> projectiles;
-    std::vector<PTR<ProjectileComponent>> heroProjectiles;
-    std::vector<PTR<ParticleComponent>> particles;
-
-    Level(int level);
+    explicit Level(int level);
 };
 

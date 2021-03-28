@@ -11,6 +11,12 @@ struct Entity
 
     Entity() = default;
 
+    template<class TComponent>
+    void AddComponent(const std::shared_ptr<IComponent>& component)
+    {
+        components[typeid(TComponent)] = component;
+    }
+
     template<class TComponent> 
     std::shared_ptr<TComponent> GetComponent()
     {

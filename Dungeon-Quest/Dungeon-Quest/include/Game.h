@@ -5,13 +5,13 @@
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 
-#include "Defines.h"
-#include "Screen.h"
+#include <Defines.h>
+#include <screens/Screen.hpp>
 
 struct Game
 {
     static inline PTR<sf::RenderWindow> window;
-    static inline PTR<Screen> screen;
+    static inline PTR<IScreen> screen;
 
     Game();
     void Run();

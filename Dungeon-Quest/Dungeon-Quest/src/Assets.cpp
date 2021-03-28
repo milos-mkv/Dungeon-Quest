@@ -3,12 +3,11 @@
 
 void Assets::LoadAssets()
 {
-    for (int i = 0; i < CHARACTER_TYPE_COUNT; i++)
+    for (int i = 0; i < CHARACTER_NAMES.size(); i++)
     {
         LoadCharacterTextures((CharacterType)i);
     }
     LoadItemTextures();
-    LoadSounds();
 }
 
 void Assets::LoadCharacterTextures(CharacterType type)
@@ -45,10 +44,8 @@ void Assets::LoadItemTextures()
         ASSERT(ParticleTextures[ParticleType::PUF][i].loadFromFile("assets/puf" + std::to_string(i) + ".png"), "Failed to load texture!");        
         ASSERT(ParticleTextures[ParticleType::BROKEN_ARROW][i].loadFromFile("assets/broken_arrow" + std::to_string(i) + ".png"), "Failed to load texture!");
     }
+    ASSERT(MapTextures[0].loadFromFile("assets/level1.png"), "Failed to load texture!");
+
 }
 
-void Assets::LoadSounds()
-{
-    ASSERT(Sounds["Fire"].loadFromFile("assets/fire.wav"), "Failed to load sound!");
-}
 

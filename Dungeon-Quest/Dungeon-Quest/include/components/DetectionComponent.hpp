@@ -1,14 +1,27 @@
 #pragma once
 
+#include <components/Component.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 
-/*!
- * Detection Component class is used for creating detection boxes for enemy type characters. (Detect hero if nearby)
- */
-struct DetectionComponent : public sf::RectangleShape
+struct DetectionComponent : public IComponent
 {
-    DetectionComponent(); // Default constructor.
-    DetectionComponent(float x, float y, float width, float height); // Parametrized constructor.
+    sf::RectangleShape detection;
+
+    DetectionComponent()
+    {
+        Setup();
+    }
+    DetectionComponent(float x, float y, float width, float height)
+    {
+        detection.setPosition(x, y);
+        detection.setSize({ width, height });
+        Setup();
+    }
 private:
-    void Setup(); // Setup collider otiline color and size.
+    void Setup()
+    {
+        detection.setFillColor(sf::Color::Transparent);
+        detection.setOutlineColor(sf::Color::Red);
+        detection.setOutlineThickness(1.0F);
+    }
 };

@@ -1,16 +1,13 @@
 #pragma once
 
-#include <SFML/Graphics/Sprite.hpp>
-#include <components/AnimationComponent.h>
+#include <components/Component.hpp>
 
 enum ParticleType { PUF, BROKEN_ARROW };
 
-struct ParticleComponent :public AnimationComponent
+struct ParticleComponent : public IComponent
 {
-    sf::Sprite sprite;
     ParticleType type;
-    bool done;
+    bool         done = false;
 
-    ParticleComponent(ParticleType type, float x, float y);
-    void UpdateAnimation(float delta);
+    ParticleComponent(ParticleType type) : type(type) { }
 };
