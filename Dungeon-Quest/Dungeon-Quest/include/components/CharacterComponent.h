@@ -64,7 +64,7 @@ static std::map<CharacterType, CharacterDefaultProperties> CharacterProperties =
 { 
     { CharacterType::ELF,           { { 16.0F, 28.0F }, { 14.0F, 18.0F }, CharacterAttackType::RANGED, 100, 0.01F, ProjectileType::ARROW,     1.0F, 3 } },
     { CharacterType::KNIGHT,        { { 16.0F, 28.0F }, { 14.0F, 18.0F }, CharacterAttackType::MELEE,  100, 0.01F, ProjectileType::NONE,      1.0F, 3 } },
-    { CharacterType::WIZZARD,       { { 16.0F, 28.0F }, { 14.0F, 18.0F }, CharacterAttackType::RANGED, 100, 0.01F,  ProjectileType::BLUE_FIRE, 1.0F, 3 } },
+    { CharacterType::WIZZARD,       { { 16.0F, 28.0F }, { 14.0F, 18.0F }, CharacterAttackType::RANGED, 100, 1.F,  ProjectileType::BLUE_FIRE, 1.0F, 3 } },
     { CharacterType::OGRE,          { { 32.0F, 32.0F }, { 20.0F, 25.0F }, CharacterAttackType::MELEE,  50,  1.0F,  ProjectileType::NONE,      1.0F, 3 } },
     { CharacterType::ORC_SHAMAN,    { { 16.0F, 20.0F }, { 12.0F, 16.0F }, CharacterAttackType::RANGED, 70,  0.01F, ProjectileType::RED_FIRE,  50.F, 3 } },
     { CharacterType::ORC_WARRIOR,   { { 16.0F, 20.0F }, { 12.0F, 16.0F }, CharacterAttackType::MELEE,  70,  1.0F,  ProjectileType::NONE,      1.0F, 3 } },

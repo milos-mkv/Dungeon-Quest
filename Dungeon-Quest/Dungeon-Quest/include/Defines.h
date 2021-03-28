@@ -11,8 +11,8 @@
 #define CreatePTR std::make_shared
 
 constexpr int TILE_SIZE       = 16;
-constexpr int VIEWPORT_WIDTH  = 247 * 2;
-constexpr int VIEWPORT_HEIGHT = 135 * 2;
+constexpr int VIEWPORT_WIDTH  = 247;
+constexpr int VIEWPORT_HEIGHT = 135;
 
 static sf::Vector2f GetVectorDiff(const sf::Vector2f& collider, const sf::Vector2f& texture)
 {

@@ -15,7 +15,7 @@ ProjectileEntitySystem::ProjectileEntitySystem(const PTR<Level>& level)
 
 void ProjectileEntitySystem::Update(float delta)
 {
-    for (auto iter = level->projectiles.begin(); iter != level->projectiles.end(); iter++)
+    for (auto iter = level->projectiles.begin(); iter < level->projectiles.end(); iter++)
     {
         auto animationComponent  = (*iter)->GetComponent<AnimationComponent>();
         auto spriteComponent     = (*iter)->GetComponent<SpriteComponent>();
@@ -24,16 +24,14 @@ void ProjectileEntitySystem::Update(float delta)
     
         UpdateProjectileAnimation(animationComponent, delta);
 
-        sf::Vector2f diff = spriteComponent->sprite.getPosition() - projectileComponent->target;
+        sf::Vector2f diff = projectileComponent->target - colliderComponent->collider.getPosition();
         sf::Vector2f dir  = normalize(diff);
-
 
         if (std::sqrt(diff.x * diff.x + diff.y * diff.y) > 1.0F)
         {
             spriteComponent->sprite.move({ -dir.x * PROJECTILE_SPEED * delta, -dir.y * PROJECTILE_SPEED * delta });
             colliderComponent->collider.move({ -dir.x * PROJECTILE_SPEED * delta, -dir.y * PROJECTILE_SPEED * delta });
         }
-        
         else
             projectileComponent->done = true;
 

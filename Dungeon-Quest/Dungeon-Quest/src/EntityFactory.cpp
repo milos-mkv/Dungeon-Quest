@@ -1,7 +1,7 @@
 #include <EntityFactory.hpp>
 #include <Defines.h>
 #include <Entity.hpp>
-
+#include <iostream>
 #include <components/CharacterComponent.h>
 #include <components/ParticleComponent.hpp>
 #include <components/SpriteComponent.hpp>
@@ -15,6 +15,11 @@
 #include <components/RangeComponent.hpp>
 
 #include <Assets.h>
+
+static sf::Vector2f inverse(const sf::Vector2f& vec)
+{
+    return { -vec.x, -vec.y };
+}
 
 PTR<Entity> EntityFactory::CreateParticle(ParticleType type, const sf::Vector2f& position)
 {
@@ -33,9 +38,12 @@ PTR<Entity> EntityFactory::CreateProjectile(ProjectileType type, const sf::Vecto
 {
     auto entity              = CreatePTR<Entity>();
     auto spriteComponent     = CreatePTR<SpriteComponent>(Assets::ProjectileTextures[type][0], position.x, position.y);
-    auto projectileComponent = CreatePTR<ProjectileComponent>(type, (position + normalize(position - target) * 150.F));
+    auto projectileComponent = CreatePTR<ProjectileComponent>(type, position + normalize(position - target) * -150.F);
     auto animationComponent  = CreatePTR<AnimationComponent>();
     auto colliderComponent   = CreatePTR<ColliderComponent>(position, (sf::Vector2f)spriteComponent->sprite.getTexture()->getSize());
+
+    sf::Vector2f a = position + normalize(position - target) * -150.F;
+    std::cout << a.x << ":" << a.y << std::endl;
 
     spriteComponent->sprite.setOrigin({ 2.5F, 2.5F });
     sf::Vector2f diff = position - target;

@@ -13,20 +13,12 @@
 
 #include <Engine.hpp>
 
-struct GameplayScreen : public IScreen
+struct GameplayScreen final : public IScreen
 {
-    PTR<Level>                    level;
-    PTR<CollisionDetectionSystem> collisionDetectionSystem;
-    PTR<EnemyEntitySystem>        enemySystem;
-    PTR<PlayerEntitySystem>       playerSystem;
-    PTR<ProjectileEntitySystem>   projectileSystem;
-    PTR<ParticleEntitySystem>     particleSystem;
-    PTR<RenderSystem>             renderSystem;
-
+    PTR<Level>  level;
     PTR<Engine> engine;
 
     GameplayScreen();
     void Render(float delta) override;
-    virtual ~GameplayScreen() = default;
 };
 
