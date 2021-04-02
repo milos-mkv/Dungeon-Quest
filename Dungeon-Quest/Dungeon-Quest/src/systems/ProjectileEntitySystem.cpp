@@ -5,6 +5,7 @@
 #include <components/SpriteComponent.hpp>
 #include <components/ColliderComponent.hpp>
 #include <Game.h>
+#include <Assets.h>
 
 constexpr auto PROJECTILE_SPEED = -150.F;
 
@@ -23,6 +24,7 @@ void ProjectileEntitySystem::Update(float delta)
         auto projectileComponent = (*iter)->GetComponent<ProjectileComponent>();
     
         UpdateProjectileAnimation(animationComponent, delta);
+        spriteComponent->sprite.setTexture(Assets::ProjectileTextures[projectileComponent->type][animationComponent->index]);
 
         sf::Vector2f diff = projectileComponent->target - colliderComponent->collider.getPosition();
         sf::Vector2f dir  = normalize(diff);

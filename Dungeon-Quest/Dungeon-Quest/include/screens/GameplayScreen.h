@@ -21,4 +21,3 @@ struct GameplayScreen final : public IScreen
     GameplayScreen();
     void Render(float delta) override;
 };
-

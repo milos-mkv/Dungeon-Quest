@@ -2,7 +2,7 @@
 
 #include <components/Component.hpp>
 
-enum ParticleType { PUF, BROKEN_ARROW };
+enum ParticleType { PUF, BROKEN_ARROW, DEAD };
 
 struct ParticleComponent : public IComponent
 {

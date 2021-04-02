@@ -21,4 +21,26 @@ Level::Level(int level)
     enemies.push_back(EntityFactory::CreateEnemy(CharacterType::ORC_SHAMAN, { 350, 350 }));
     enemies.push_back(EntityFactory::CreateEnemy(CharacterType::SKELET,     { 250, 100 }));
     enemies.push_back(EntityFactory::CreateEnemy(CharacterType::MASKED_ORC, { 270, 100 }));
+
+    items.push_back(EntityFactory::CreateCrate({ 130, 100 }));   
+    items.push_back(EntityFactory::CreateChest(ChestType::FULL, { 160, 100 }));
+    items.push_back(EntityFactory::CreateChest(ChestType::FULL, { 600, 105 }));
+    items.push_back(EntityFactory::CreateCoin({ 80, 105 }));
+    items.push_back(EntityFactory::CreateCoin({ 80, 105 }));
+    items.push_back(EntityFactory::CreateCoin({ 80, 105 }));
+    items.push_back(EntityFactory::CreateCoin({ 80, 105 }));
+    items.push_back(EntityFactory::CreateCoin({ 80, 105 }));
+    items.push_back(EntityFactory::CreateCoin({ 80, 105 }));
+    items.push_back(EntityFactory::CreateCoin({ 80, 105 }));
+    items.push_back(EntityFactory::CreateCoin({ 80, 105 }));
+    items.push_back(EntityFactory::CreateCoin({ 80, 105 }));
+    items.push_back(EntityFactory::CreateCoin({ 80, 105 }));
+    items.push_back(EntityFactory::CreateCoin({ 80, 105 }));
+    items.push_back(EntityFactory::CreateCoin({ 80, 105 }));
+    items.push_back(EntityFactory::CreateCoin({ 80, 105 }));
+    items.push_back(EntityFactory::CreateCoin({ 80, 105 }));
+    items.push_back(EntityFactory::CreateCoin({ 80, 105 }));
+    items.push_back(EntityFactory::CreateCoin({ 80, 105 }));
+    items.push_back(EntityFactory::CreateCoin({ 80, 105 }));
+
 }

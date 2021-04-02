@@ -40,6 +40,12 @@ void RenderSystem::Update(float delta)
         Game::window->draw(wall->GetComponent<ColliderComponent>()->collider);
     }
 
+    for (const auto& item : level->items)
+    {
+        Game::window->draw(item->GetComponent<SpriteComponent>()->sprite);
+        Game::window->draw(item->GetComponent<ColliderComponent>()->collider);
+    }
+
     for (const auto& enemy : level->enemies)
     {
         enemy->GetComponent<SpriteComponent>()->sprite.move(enemy->GetComponent<CharacterComponent>()->speed);

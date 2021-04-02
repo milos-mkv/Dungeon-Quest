@@ -13,13 +13,11 @@
 #include <components/EnemyComponent.hpp>
 #include <components/DetectionComponent.hpp>
 #include <components/RangeComponent.hpp>
+#include <components/ChestComponent.hpp>
+#include <components/CoinComponent.hpp>
+
 
 #include <Assets.h>
-
-static sf::Vector2f inverse(const sf::Vector2f& vec)
-{
-    return { -vec.x, -vec.y };
-}
 
 PTR<Entity> EntityFactory::CreateParticle(ParticleType type, const sf::Vector2f& position)
 {
@@ -38,16 +36,15 @@ PTR<Entity> EntityFactory::CreateProjectile(ProjectileType type, const sf::Vecto
 {
     auto entity              = CreatePTR<Entity>();
     auto spriteComponent     = CreatePTR<SpriteComponent>(Assets::ProjectileTextures[type][0], position.x, position.y);
-    auto projectileComponent = CreatePTR<ProjectileComponent>(type, position + normalize(position - target) * -150.F);
+    auto projectileComponent = CreatePTR<ProjectileComponent>(type, position + normalize(target - position) * 150.F);
     auto animationComponent  = CreatePTR<AnimationComponent>();
     auto colliderComponent   = CreatePTR<ColliderComponent>(position, (sf::Vector2f)spriteComponent->sprite.getTexture()->getSize());
 
     sf::Vector2f a = position + normalize(position - target) * -150.F;
-    std::cout << a.x << ":" << a.y << std::endl;
 
-    spriteComponent->sprite.setOrigin({ 2.5F, 2.5F });
     sf::Vector2f diff = position - target;
     spriteComponent->sprite.setRotation(atan2(diff.y, diff.x) * (180.0F / 3.14F));
+    spriteComponent->sprite.setOrigin({ 2.5F, 2.5F });
 
     entity->AddComponent<SpriteComponent>(spriteComponent);
     entity->AddComponent<ProjectileComponent>(projectileComponent);
@@ -62,11 +59,11 @@ PTR<Entity> EntityFactory::CreateProjectile(ProjectileType type, const sf::Vecto
 
 PTR<Entity> EntityFactory::CreateWall(const sf::Vector2f& position, const sf::Vector2f& size)
 {
+    
     auto entity            = CreatePTR<Entity>();
     auto colliderComponent = CreatePTR<ColliderComponent>(position.x, position.y, size.x, size.y);
 
     entity->AddComponent<ColliderComponent>(colliderComponent);
-
     return entity;
 }
 
@@ -116,6 +113,50 @@ PTR<Entity> EntityFactory::CreateEnemy(CharacterType type, const sf::Vector2f& p
     entity->AddComponent<ColliderComponent>(colliderComponent);
     entity->AddComponent<DetectionComponent>(detectionComponent);
     entity->AddComponent<RangeComponent>(rangeComponent);
+
+    return entity;
+}
+
+PTR<Entity> EntityFactory::CreateCrate(const sf::Vector2f& position)
+{
+    auto entity             = CreatePTR<Entity>();
+    auto colliderComponent  = CreatePTR<ColliderComponent>(position, sf::Vector2f(14, 18));
+    auto spriteComponent    = CreatePTR<SpriteComponent>(Assets::CrateTexture, position.x - 1, position.y - 1);
+
+    entity->AddComponent<ColliderComponent>(colliderComponent);    
+    entity->AddComponent<SpriteComponent>(spriteComponent);
+
+    return entity;
+}
+
+PTR<Entity> EntityFactory::CreateChest(ChestType type, const sf::Vector2f& position)
+{
+    auto entity             = CreatePTR<Entity>();
+    auto colliderComponent  = CreatePTR<ColliderComponent>(position, sf::Vector2f(14, 12));
+    auto spriteComponent    = CreatePTR<SpriteComponent>(Assets::ChestTextures[type][0], position.x - 1, position.y - 1);
+    auto chestComponent     = CreatePTR<ChestComponent>(type);
+    auto animationComponent = CreatePTR<AnimationComponent>();
+
+    entity->AddComponent<ColliderComponent>(colliderComponent);
+    entity->AddComponent<SpriteComponent>(spriteComponent);
+    entity->AddComponent<ChestComponent>(chestComponent);
+    entity->AddComponent<AnimationComponent>(animationComponent);
+
+    return entity;
+}
+
+PTR<Entity> EntityFactory::CreateCoin(const sf::Vector2f& position)
+{
+    auto entity             = CreatePTR<Entity>();
+    auto colliderComponent  = CreatePTR<ColliderComponent>(position, sf::Vector2f(5, 5));
+    auto spriteComponent    = CreatePTR<SpriteComponent>(Assets::CoinTextures[0], position.x, position.y);
+    auto coinComponent      = CreatePTR<CoinComponent>(sf::Vector2f(position.x + RandFloat(-36, 36), position.y + RandFloat(-36, 36)));
+    auto animationComponent = CreatePTR<AnimationComponent>();
+
+    entity->AddComponent<ColliderComponent>(colliderComponent);
+    entity->AddComponent<SpriteComponent>(spriteComponent);
+    entity->AddComponent<CoinComponent>(coinComponent);
+    entity->AddComponent<AnimationComponent>(animationComponent);
 
     return entity;
 }

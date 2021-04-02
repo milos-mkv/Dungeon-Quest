@@ -2,6 +2,7 @@
 
 #include <screens/LoadingScreen.h>
 #include <screens/GameplayScreen.h>
+#include <screens/MainMenuScreen.hpp>
 #include <string>
 #include <iostream>
 Game::Game()
@@ -13,6 +14,7 @@ Game::Game()
    // window->setVerticalSyncEnabled(true);
 
     screen = CreatePTR<LoadingScreen>();
+   // screen = CreatePTR<MainMenuScreen>();
     screen = CreatePTR<GameplayScreen>();
 }
 

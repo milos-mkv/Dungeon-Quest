@@ -166,8 +166,10 @@
     <ClCompile Include="src\screens\LoadingScreen.cpp" />
     <ClCompile Include="src\screens\GameplayScreen.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\screens\MainMenuScreen.cpp" />
     <ClCompile Include="src\systems\CollisionDetectionSystem.cpp" />
     <ClCompile Include="src\systems\EnemyEntitySystem.cpp" />
+    <ClCompile Include="src\systems\LevelItemsSystem.cpp" />
     <ClCompile Include="src\systems\ParticleEntitySystem.cpp" />
     <ClCompile Include="src\systems\PlayerEntitySystem.cpp" />
     <ClCompile Include="src\systems\ProjectileEntitySystem.cpp" />
@@ -177,6 +179,8 @@
     <ClInclude Include="include\components\AnimationComponent.hpp" />
     <ClInclude Include="include\components\AttackComponent.hpp" />
     <ClInclude Include="include\components\CharacterComponent.h" />
+    <ClInclude Include="include\components\ChestComponent.hpp" />
+    <ClInclude Include="include\components\CoinComponent.hpp" />
     <ClInclude Include="include\components\Component.hpp" />
     <ClInclude Include="include\components\DetectionComponent.hpp" />
     <ClInclude Include="include\components\EnemyComponent.hpp" />
@@ -195,10 +199,12 @@
     <ClInclude Include="include\components\ColliderComponent.hpp" />
     <ClInclude Include="include\Defines.h" />
     <ClInclude Include="include\components\PlayerComponent.hpp" />
+    <ClInclude Include="include\screens\MainMenuScreen.hpp" />
     <ClInclude Include="include\screens\Screen.hpp" />
     <ClInclude Include="include\systems\CollisionDetectionSystem.hpp" />
     <ClInclude Include="include\systems\EnemyEntitySystem.hpp" />
     <ClInclude Include="include\systems\IEntitySystem.hpp" />
+    <ClInclude Include="include\systems\LevelItemsSystem.hpp" />
     <ClInclude Include="include\systems\ParticleEntitySystem.hpp" />
     <ClInclude Include="include\systems\PlayerEntitySystem.hpp" />
     <ClInclude Include="include\systems\ProjectileEntitySystem.hpp" />

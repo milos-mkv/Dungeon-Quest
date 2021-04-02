@@ -29,4 +29,9 @@ struct EntityFactory final
     static PTR<Entity> CreateHero(CharacterType type, const sf::Vector2f& position);
 
     static PTR<Entity> CreateEnemy(CharacterType type, const sf::Vector2f& position);
+
+    static PTR<Entity> CreateCrate(const sf::Vector2f& position);
+    static PTR<Entity> CreateChest(ChestType type, const sf::Vector2f& position);
+    static PTR<Entity> CreateCoin(const sf::Vector2f& position);
+
 };

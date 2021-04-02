@@ -3,9 +3,10 @@
 #include <components/CharacterComponent.h>
 #include <components/EnemyComponent.hpp>
 #include <components/DetectionComponent.hpp>
+#include <components/CoinComponent.hpp>
 
 #include <screens/GameplayScreen.h>
-
+#include <iostream>
 #include <EntityFactory.hpp>
 
 static bool CheckCollisionX(const PTR<Entity>& e1, const sf::RectangleShape& r2);
@@ -42,6 +43,46 @@ void CollisionDetectionSystem::Update(float delta)
         }
     }
 
+    for (const auto& item : level->items)
+    {
+        auto wallCollider   = item->GetComponent<ColliderComponent>();
+        auto chestComponent = item->GetComponent<ChestComponent>();
+        auto coinComponent  = item->GetComponent<CoinComponent>();
+
+
+        
+
+        if (CheckCollisionX(level->player, wallCollider->collider))
+        {
+            level->player->GetComponent<CharacterComponent>()->speed.x = 0;
+            if(chestComponent)
+            {
+                chestComponent->opened = true;
+            }
+        }
+        if (CheckCollisionY(level->player, wallCollider->collider))
+        {
+            level->player->GetComponent<CharacterComponent>()->speed.y = 0;
+            if (chestComponent)
+                chestComponent->opened = true;
+        }
+        for (const auto& enemy : level->enemies)
+        {
+            if (CheckCollisionX(enemy, wallCollider->collider)) enemy->GetComponent<CharacterComponent>()->speed.x = 0;
+            if (CheckCollisionY(enemy, wallCollider->collider)) enemy->GetComponent<CharacterComponent>()->speed.y = 0;
+        }
+
+        for (auto iter = level->projectiles.begin(); iter < level->projectiles.end(); iter++)
+        {
+            if (CheckCollision((*iter)->GetComponent<ColliderComponent>()->collider, wallCollider->collider))
+            {
+                level->particles.push_back(EntityFactory::CreateParticle(ParticleType::PUF, (*iter)->GetComponent<ColliderComponent>()->collider.getPosition()));
+                level->projectiles.erase(iter);
+            }
+        }
+
+
+    }
     for (const auto& enemy : level->enemies)
     {
         auto characterComponent = enemy->GetComponent<CharacterComponent>();
@@ -85,6 +126,7 @@ void CollisionDetectionSystem::Update(float delta)
         }
     }
 
+
     for (auto iter = level->projectiles.begin(); iter < level->projectiles.end(); iter++)
     {
         if ((*iter)->GetComponent<PlayerComponent>())
@@ -96,7 +138,10 @@ void CollisionDetectionSystem::Update(float delta)
                     level->projectiles.erase(iter);
                     (*enemy)->GetComponent<EnemyComponent>()->chasing = true;
                     if (--(*enemy)->GetComponent<CharacterComponent>()->life == 0)
+                    {
+                        level->particles.push_back(EntityFactory::CreateParticle(ParticleType::DEAD, (*enemy)->GetComponent<ColliderComponent>()->collider.getPosition()));
                         level->enemies.erase(enemy);
+                    }
                     break;
                 }
             }
@@ -115,7 +160,7 @@ void CollisionDetectionSystem::Update(float delta)
 
     auto playerChracterComponent = level->player->GetComponent<CharacterComponent>();
 
-    if (playerChracterComponent->speed.x && playerChracterComponent->speed.y)
+    if ((bool)playerChracterComponent->speed.x && (bool)playerChracterComponent->speed.y)
     {
         playerChracterComponent->speed = { playerChracterComponent->speed.x / 1.2F, playerChracterComponent->speed.y / 1.2F };
     }

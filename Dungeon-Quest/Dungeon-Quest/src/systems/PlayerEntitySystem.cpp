@@ -8,6 +8,11 @@
 #include <EntityFactory.hpp>
 #include <iostream>
 
+static sf::Vector2f VecAdd(const sf::Vector2f& vec, int i)
+{
+    return { vec.x + i, vec.y + i };
+}
+
 static sf::Vector2f GetCursorWordPosition(const PTR<sf::View>& camera)
 {
     sf::Vector2f mouse = static_cast<sf::Vector2f>(sf::Mouse::getPosition());
@@ -63,7 +68,7 @@ void PlayerEntitySystem::Update(float delta)
     {
         attackComponent->timer += delta;
         level->projectiles.push_back(EntityFactory::CreateProjectile(CharacterProperties[characterComponent->type].projectileType, 
-            colliderComponent->GetCenter(), GetCursorWordPosition(level->camera), true));
+            colliderComponent->GetCenter(), VecAdd(GetCursorWordPosition(level->camera) , RandInt(-7, 7)), true));
     }
 }
 

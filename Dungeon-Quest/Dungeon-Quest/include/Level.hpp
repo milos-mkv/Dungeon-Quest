@@ -27,6 +27,7 @@ struct Level
     PTR<Entity>              player;
     std::vector<PTR<Entity>> projectiles;
     std::vector<PTR<Entity>> particles;
+    std::vector<PTR<Entity>> items;
     PTR<sf::View>            uiview;
     PTR<sf::View>            camera;
     sf::Sprite               mapSprite;

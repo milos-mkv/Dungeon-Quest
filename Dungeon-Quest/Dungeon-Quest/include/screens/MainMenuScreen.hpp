@@ -2,9 +2,8 @@
 
 #include <screens/Screen.hpp>
 
-struct LoadingScreen : public IScreen
+struct MainMenuScreen final : public IScreen
 {
-    LoadingScreen();
+    explicit MainMenuScreen();
     void Render(float delta) override;
 };
-

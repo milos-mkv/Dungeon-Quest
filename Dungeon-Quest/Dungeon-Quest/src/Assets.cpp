@@ -26,6 +26,7 @@ void Assets::LoadItemTextures()
     ASSERT(HeartTexture[0].loadFromFile("assets/frames/ui_heart_full.png"),  "Failed to load texture!");
     ASSERT(HeartTexture[1].loadFromFile("assets/frames/ui_heart_half.png"),  "Failed to load texture!");
     ASSERT(HeartTexture[2].loadFromFile("assets/frames/ui_heart_empty.png"), "Failed to load texture!");
+    ASSERT(CrateTexture.loadFromFile("assets/frames/crate.png"), "Failed to load texture!");
 
     for (int i = 0; i < 4; i++)
     {
@@ -43,8 +44,23 @@ void Assets::LoadItemTextures()
     {
         ASSERT(ParticleTextures[ParticleType::PUF][i].loadFromFile("assets/puf" + std::to_string(i) + ".png"), "Failed to load texture!");        
         ASSERT(ParticleTextures[ParticleType::BROKEN_ARROW][i].loadFromFile("assets/broken_arrow" + std::to_string(i) + ".png"), "Failed to load texture!");
+        ASSERT(ParticleTextures[ParticleType::DEAD][i].loadFromFile("assets/dead" + std::to_string(i) + ".png"), "Failed to load texture!");
+       
+        
+        ASSERT(CoinTextures[i].loadFromFile("assets/frames/coin_anim_f" + std::to_string(i) + ".png"), "Failed to load texture!");
+        
     }
     ASSERT(MapTextures[0].loadFromFile("assets/level1.png"), "Failed to load texture!");
+
+    ASSERT(GameTitleTexture.loadFromFile("assets/Dungeon-Quest.png"), "Failed to load texture!");
+
+    for (int i = 0; i < 3; i++)
+    {
+        ASSERT(ChestTextures[ChestType::EMPTY][i].loadFromFile("assets/frames/chest_empty_open_anim_f"+ std::to_string(i) +".png"), "Failed to load texture!");
+        ASSERT(ChestTextures[ChestType::FULL] [i].loadFromFile("assets/Frames/chest_full_open_anim_f"+ std::to_string(i) +".png"), "Failed to load texture!");
+
+    }
+
 
 }
 

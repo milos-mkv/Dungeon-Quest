@@ -1,13 +1,13 @@
 #pragma once
 
 #include <typeindex>
-#include <map>
+#include <unordered_map>
 #include <memory>
 #include <components/Component.hpp>
 
 struct Entity
 {
-    std::map<std::type_index, std::shared_ptr<IComponent>> components;
+    std::unordered_map<std::type_index, std::shared_ptr<IComponent>> components;
 
     Entity() = default;
 

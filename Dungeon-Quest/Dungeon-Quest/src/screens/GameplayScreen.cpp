@@ -3,6 +3,7 @@
 #include <Game.h>
 #include <iostream>
 #include <Assets.h>
+#include <systems/LevelItemsSystem.hpp>
 
 GameplayScreen::GameplayScreen()
 {
@@ -12,6 +13,7 @@ GameplayScreen::GameplayScreen()
     engine->AddSystem<PlayerEntitySystem>(CreatePTR<PlayerEntitySystem>(level));
     engine->AddSystem<EnemyEntitySystem>(CreatePTR<EnemyEntitySystem>(level));
     engine->AddSystem<CollisionDetectionSystem>(CreatePTR<CollisionDetectionSystem>(level));
+    engine->AddSystem<LevelItemSystem>(CreatePTR<LevelItemSystem>(level));
     engine->AddSystem<ProjectileEntitySystem>(CreatePTR<ProjectileEntitySystem>(level));
     engine->AddSystem<ParticleEntitySystem>(CreatePTR<ParticleEntitySystem>(level));
     engine->AddSystem<RenderSystem>(CreatePTR<RenderSystem>(level));
